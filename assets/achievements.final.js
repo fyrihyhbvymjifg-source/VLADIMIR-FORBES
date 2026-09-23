@@ -1,0 +1,25 @@
+(()=>{
+const cfg=window.BR_FIREBASE_CONFIG;
+const DAY=86400000;
+const defs={
+ first_number:{icon:'🥇',label:'Первый номер',desc:'Игрок хотя бы один раз занимал первое место.',how:'Автоматически: лучшее место за всё время — #1.',auto:true,rare:true},
+ breakthrough:{icon:'⚡',label:'Прорыв недели',desc:'Сильный рост позиции за короткий период.',how:'Автоматически: подъём минимум на 5 мест за последние 7 дней.',auto:true,rare:true},
+ centurion:{icon:'💯',label:'100 дней',desc:'Долгое присутствие в рейтинге проекта.',how:'Автоматически после 100 дней в рейтинге.',auto:true,rare:true},
+ veteran_rare:{icon:'🛡️',label:'Ветеран',desc:'Постоянный участник рейтинга.',how:'Автоматически после 30 дней в рейтинге.',auto:true,rare:true},
+ legend:{icon:'👑',label:'Легенда',desc:'Особый статус заметного игрока сервера.',how:'Назначается владельцем проекта вручную.'},
+ top:{icon:'🔥',label:'Топ игрок',desc:'Особая отметка сильного участника рейтинга.',how:'Назначается владельцем проекта вручную.'},
+ vip:{icon:'💎',label:'VIP',desc:'Эксклюзивный статус участника.',how:'Назначается владельцем проекта вручную.'},
+ veteran:{icon:'⭐',label:'Старожил',desc:'Игрок, давно известный сообществу.',how:'Назначается владельцем проекта вручную.'},
+ newbie:{icon:'🚀',label:'Новичок',desc:'Отметка нового участника рейтинга.',how:'Назначается владельцем проекта вручную.'},
+ founder:{icon:'🏛️',label:'Основатель',desc:'Специальная роль создателя проекта.',how:'Назначается владельцем проекта вручную.'},
+ developer:{icon:'🛠️',label:'Разработчик',desc:'Участник, связанный с разработкой проекта.',how:'Назначается владельцем проекта вручную.'},
+ blogger:{icon:'🎥',label:'Блогер',desc:'Участник, создающий контент и развивающий сообщество.',how:'Назначается владельцем проекта вручную.'},
+ season_champion:{icon:'🏆',label:'Чемпион сезона',desc:'Победитель или главный игрок завершённого сезона.',how:'Назначается владельцем проекта вручную.',rare:true}
+};
+const arr=v=>Array.isArray(v)?v:(v&&typeof v==='object'?Object.values(v):[]);
+function delta7(p){const epoch=Number(p?.achievementEpoch)||0;const cutoff=Math.max(Date.now()-7*DAY,epoch);const ev=arr(p.rankHistory).filter(h=>Number(h?.time)>=cutoff&&Number(h?.from)>0&&Number(h?.to)>0).sort((a,b)=>Number(a.time)-Number(b.time));if(epoch&&!ev.length)return 0;let base=Number(p.rank)||0;if(ev.length)base=Number(ev[0].from)||base;return base-(Number(p.rank)||base)}
+function autoKeys(p){const out=[];const epoch=Number(p?.achievementEpoch)||0;const age=Date.now()-Math.max(Number(p.createdAt||Date.now()),epoch);const ev=arr(p.rankHistory).filter(h=>Number(h?.time)>=epoch);const first=epoch?ev.some(h=>Number(h?.to)===1):Math.min(Number(p.bestRank)||999,Number(p.rank)||999)<=1;if(first)out.push('first_number');if(delta7(p)>=5)out.push('breakthrough');if(age>=100*DAY)out.push('centurion');if(age>=30*DAY)out.push('veteran_rare');return out}
+function combined(p){return [...new Set([...arr(p.achievements),...autoKeys(p)])].filter(k=>defs[k])}
+function card(k,count){const d=defs[k];return `<article class="ach-card ${d.auto?'auto':'special'} ${d.rare?'rare':''}" id="ach-${k}"><div class="ach-card-icon">${d.icon}</div><h3>${d.label}</h3><p>${d.desc}</p><div class="ach-card-footer"><span>${d.how}</span><b class="ach-count">${count} игрок.</b></div></article>`}
+function render(players){window.BR_MINIPROFILE_PLAYERS=players;try{window.dispatchEvent(new CustomEvent('br:miniprofile-players',{detail:players}));}catch{}const counts={};Object.keys(defs).forEach(k=>counts[k]=0);players.forEach(p=>combined(p).forEach(k=>counts[k]++));const auto=['first_number','breakthrough','centurion','veteran_rare'];const manual=['legend','top','vip','veteran','newbie','founder','developer','blogger','season_champion'];document.getElementById('automaticAchievements').innerHTML=auto.map(k=>card(k,counts[k])).join('');document.getElementById('manualAchievements').innerHTML=manual.map(k=>card(k,counts[k])).join('');document.getElementById('achPlayerCount').textContent=players.length;document.getElementById('achAwardCount').textContent=Object.values(counts).reduce((a,b)=>a+b,0);if(location.hash){setTimeout(()=>document.querySelector(location.hash)?.scrollIntoView({behavior:'smooth',block:'center'}),80)}}
+if(!cfg||!window.firebase){render([]);return}try{if(!firebase.apps.length)firebase.initializeApp(cfg);const db=firebase.database();db.ref('players').once('value').then(s=>render(arr(s.val()))).catch(()=>render([]));db.ref('settings/siteSettings').on('value',s=>{const x=s.val()||{};const root=document.documentElement;root.dataset.theme=['black-red','cyber-blue','gold','neon-purple','dark','custom'].includes(x.theme)?x.theme:'black-red';if(/^#[0-9a-f]{6}$/i.test(String(x.customAccent||'')))root.style.setProperty('--custom-accent',x.customAccent);root.classList.toggle('glass-mode',x.glass!==false);window.BRPerformance?.setDefault(x.performanceMode||'balanced');const n=document.getElementById('achBrandName'),sub=document.getElementById('achBrandSubtitle');if(n)n.textContent=x.name||'BLACK RUSSIA • FORBES';if(sub)sub.textContent=x.subtitle||'SERVER 78 • VLADIMIR';});}catch(e){console.warn(e);render([])}})();

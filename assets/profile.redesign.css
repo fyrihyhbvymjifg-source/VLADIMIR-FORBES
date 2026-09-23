@@ -1,0 +1,197 @@
+/* BLACK RUSSIA / Forbes profile redesign — v1 */
+:root{
+  --brp-bg:#0a0d13;
+  --brp-card:#0f131b;
+  --brp-card-2:#121721;
+  --brp-line:rgba(255,255,255,.09);
+  --brp-line-strong:rgba(255,71,96,.50);
+  --brp-text:#f6f7fb;
+  --brp-muted:#8f99ab;
+  --brp-accent:#ff4f68;
+  --brp-accent-soft:rgba(255,79,104,.10);
+  --brp-green:#6ee7b7;
+}
+
+/* Shared ambient modal treatment */
+#profileModal .modal-backdrop{background:rgba(2,4,8,.86)!important;backdrop-filter:blur(14px)!important;-webkit-backdrop-filter:blur(14px)!important}
+#profileModal .profile-card{
+  width:min(720px,calc(100vw - 28px))!important;
+  max-width:720px!important;
+  max-height:calc(100dvh - 26px)!important;
+  overflow:auto!important;
+  padding:34px!important;
+  border-radius:28px!important;
+  border:1px solid rgba(98,113,145,.32)!important;
+  background:
+    radial-gradient(circle at 10% 5%,rgba(178,25,54,.16),transparent 32%),
+    linear-gradient(160deg,#11151d 0%,#0b0f16 62%,#0a0e15 100%)!important;
+  box-shadow:0 42px 110px rgba(0,0,0,.68),inset 0 1px 0 rgba(255,255,255,.035)!important;
+}
+#profileModal .profile-close{
+  position:absolute!important;top:18px!important;right:18px!important;
+  width:34px!important;height:34px!important;border-radius:11px!important;
+  border:1px solid rgba(255,255,255,.09)!important;background:rgba(255,255,255,.025)!important;
+  color:#c6ccd8!important;font-size:24px!important;line-height:1!important
+}
+#profileModal .profile-close:hover{background:rgba(255,255,255,.06)!important;color:#fff!important}
+#profileContent{position:relative}
+#profileContent .profile-brandline{display:flex;align-items:center;gap:11px;padding-right:50px;margin-bottom:16px;text-transform:uppercase;letter-spacing:.18em;font-weight:900;font-size:10px}
+#profileContent .profile-brandline b{color:var(--brp-accent)}
+#profileContent .profile-brandline span{color:#737e92}
+#profileContent .profile-modal-title{margin:0 0 24px!important;color:var(--brp-text);font-size:34px!important;line-height:1.05!important;letter-spacing:-.035em!important}
+#profileContent .profile-head{display:flex!important;align-items:center!important;gap:18px!important;padding:0!important;margin-bottom:22px!important}
+#profileContent .profile-head .avatar{width:88px!important;height:88px!important;min-width:88px!important;border-radius:24px!important;border:1px solid rgba(255,82,106,.52)!important;background:linear-gradient(145deg,#e83e5d,#801c35)!important;box-shadow:0 14px 36px rgba(255,43,75,.18)!important;font-size:24px!important;overflow:hidden!important}
+#profileContent .profile-head .avatar img{width:100%;height:100%;object-fit:cover;display:block}
+#profileContent .profile-title{min-width:0}
+#profileContent .profile-title h3{margin:0!important;color:#fff!important;font-size:38px!important;line-height:1!important;letter-spacing:-.04em!important;overflow-wrap:anywhere}
+#profileContent .profile-title p{margin:7px 0 10px!important;color:#a5afbf!important;font-size:20px!important;line-height:1.2!important}
+#profileContent .profile-title .achievement-line{margin-top:8px!important}
+#profileContent .achievement-badge{font-size:9px!important;border-radius:999px!important;padding:5px 8px!important}
+
+#profileContent .profile-feature{
+  display:grid;grid-template-columns:.92fr 1.08fr;gap:0;align-items:stretch;
+  margin:0 0 14px;padding:0;overflow:hidden;
+  border:1px solid var(--brp-line-strong);border-radius:22px;
+  background:linear-gradient(135deg,rgba(122,21,43,.24),rgba(255,255,255,.018) 46%,rgba(255,255,255,.012));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.025)
+}
+#profileContent .profile-feature-rank,#profileContent .profile-feature-wealth{padding:24px 26px;min-height:126px;display:flex;align-items:center}
+#profileContent .profile-feature-rank{gap:16px;border-right:1px solid rgba(255,255,255,.10)}
+#profileContent .profile-feature-rank i{font-style:normal;color:var(--brp-accent);font-size:38px;line-height:1}
+#profileContent .profile-feature span{display:block;color:#9aa5b6;font-size:11px;letter-spacing:.13em;text-transform:uppercase;font-weight:850}
+#profileContent .profile-feature b{display:block;color:#fff;font-size:38px;letter-spacing:-.04em;line-height:1.04;margin-top:8px}
+#profileContent .profile-feature-wealth{display:block}
+#profileContent .profile-feature-wealth b{font-size:32px}
+#profileContent .profile-feature-wealth small{display:block;color:#8d98aa;font-size:12px;line-height:1.35;margin-top:8px}
+
+#profileContent .profile-grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:12px!important;margin:0!important}
+#profileContent .profile-stat{min-height:96px!important;padding:18px 20px!important;border-radius:20px!important;border:1px solid var(--brp-line)!important;background:linear-gradient(180deg,rgba(255,255,255,.030),rgba(255,255,255,.016))!important;box-shadow:none!important}
+#profileContent .profile-stat span{display:block;color:#8995a8!important;font-size:10px!important;letter-spacing:.13em!important;text-transform:uppercase;font-weight:850}
+#profileContent .profile-stat b{display:block;margin-top:9px;color:#f7f8fb!important;font-size:21px!important;letter-spacing:-.025em!important}
+#profileContent .networth-breakdown{display:none!important}
+
+#profileContent .profile-trend-card{
+  display:grid!important;grid-template-columns:minmax(0,1fr) 170px!important;gap:18px!important;align-items:center!important;
+  margin:14px 0 0!important;padding:18px 20px!important;border-radius:20px!important;
+  border:1px solid var(--brp-line)!important;background:linear-gradient(180deg,rgba(255,255,255,.025),rgba(255,255,255,.014))!important
+}
+#profileContent .profile-trend-card small{font-size:10px!important;letter-spacing:.12em!important;color:#8d98aa!important}
+#profileContent .profile-trend-card .movement-badge{font-size:10px!important;padding:6px 9px!important}
+#profileContent .profile-trend-card .rank-spark{width:170px!important;height:48px!important;color:#ff6579!important}
+#profileContent .profile-history{margin:14px 0 0!important;padding:16px 20px!important;border:1px solid var(--brp-line)!important;border-radius:20px!important;background:linear-gradient(180deg,rgba(255,255,255,.022),rgba(255,255,255,.012))!important}
+#profileContent .profile-history-title{font-size:10px!important;letter-spacing:.12em!important;color:#8d98aa!important;margin-bottom:8px!important}
+#profileContent .profile-history-row{padding:9px 0!important}
+#profileContent .profile-history-row time{font-size:10px!important;color:#778297!important}
+#profileContent .rank-move{font-size:11px!important}
+#profileContent .rank-move.down{color:#ff7185!important}
+#profileContent .rank-move.up{color:#6ee7b7!important}
+
+#profileContent .profile-actions{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:10px!important;margin-top:14px!important}
+#profileContent .profile-action-card{
+  min-height:92px!important;display:flex!important;flex-direction:column!important;align-items:flex-start!important;justify-content:center!important;gap:7px!important;
+  padding:14px 16px!important;border-radius:18px!important;text-align:left!important;text-decoration:none!important;
+  background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.017))!important;border:1px solid var(--brp-line)!important;box-shadow:none!important;color:#fff!important
+}
+#profileContent .profile-action-card:hover{border-color:rgba(255,79,104,.33)!important;background:rgba(255,79,104,.045)!important}
+#profileContent .profile-action-card span{font-size:11px!important;color:#aab3c2!important}
+#profileContent .profile-action-card b{font-size:24px!important;line-height:1!important;color:#fff!important}
+#profileContent .vk-link.profile-action-card b{font-size:15px!important}
+
+/* Forbes account / personal cabinet */
+.br-account-dialog{
+  border:1px solid rgba(98,113,145,.32)!important;border-radius:28px!important;
+  background:#0d1118!important;color:#f7f8fb!important;
+  box-shadow:0 42px 110px rgba(0,0,0,.68),inset 0 1px 0 rgba(255,255,255,.03)!important
+}
+.br-account-dialog.br-account-profile-view{width:min(720px,calc(100vw - 28px))!important}
+.br-account-dialog::backdrop{background:rgba(2,4,8,.86)!important;backdrop-filter:blur(14px)!important;-webkit-backdrop-filter:blur(14px)!important}
+.br-account-inner{padding:34px!important;background:radial-gradient(circle at 8% 3%,rgba(178,25,54,.16),transparent 31%),linear-gradient(160deg,#11151d,#0b0f16 64%,#0a0e15)!important;min-height:100%}
+.br-account-dialog h2{margin:20px 0 24px!important;font-size:34px!important;line-height:1.05!important;letter-spacing:-.035em!important}
+.br-close{top:16px!important;right:16px!important;width:34px!important;height:34px!important;border:1px solid rgba(255,255,255,.09)!important;border-radius:11px!important;background:rgba(255,255,255,.025)!important;color:#c6ccd8!important;font-size:24px!important;line-height:1!important}
+.br-close:hover{background:rgba(255,255,255,.06)!important;color:#fff!important}
+.br-kicker{gap:11px!important;color:var(--brp-accent)!important;font-size:10px!important;letter-spacing:.18em!important;font-weight:900!important}
+.br-kicker span{color:#737e92!important;font-size:9px!important}
+
+.br-profile-hero{display:flex;align-items:center;gap:18px;margin-bottom:22px}
+.br-profile-avatar{width:88px;height:88px;min-width:88px;display:grid;place-items:center;border-radius:24px;overflow:hidden;border:1px solid rgba(255,82,106,.52);background:linear-gradient(145deg,#e83e5d,#801c35);box-shadow:0 14px 36px rgba(255,43,75,.18);font-size:24px;font-weight:950}
+.br-profile-avatar img{width:100%;height:100%;display:block;object-fit:cover}
+.br-profile-identity{min-width:0}
+.br-profile-identity strong{display:block;font-size:38px;line-height:1;letter-spacing:-.04em;overflow-wrap:anywhere}
+.br-profile-identity p{margin:7px 0 10px;color:#a5afbf;font-size:20px;line-height:1.2}
+.br-profile-identity span{display:inline-flex;border:1px solid rgba(255,79,104,.34);background:rgba(255,79,104,.06);color:#ff8393;border-radius:10px;padding:7px 10px;font-size:11px;font-weight:800}
+.br-profile-feature{display:grid;grid-template-columns:.92fr 1.08fr;overflow:hidden;border:1px solid var(--brp-line-strong);border-radius:22px;background:linear-gradient(135deg,rgba(122,21,43,.24),rgba(255,255,255,.018) 46%,rgba(255,255,255,.012))}
+.br-profile-feature-rank,.br-profile-feature-wealth{padding:24px 26px;min-height:126px;display:flex;align-items:center}
+.br-profile-feature-rank{gap:16px;border-right:1px solid rgba(255,255,255,.10)}
+.br-profile-feature-rank i{font-style:normal;color:var(--brp-accent);font-size:38px;line-height:1}
+.br-profile-feature span,.br-profile-stat span{display:block;color:#8995a8;font-size:10px;letter-spacing:.13em;text-transform:uppercase;font-weight:850}
+.br-profile-feature b{display:block;color:#fff;font-size:38px;line-height:1.04;letter-spacing:-.04em;margin-top:8px}
+.br-profile-feature-wealth{display:block}
+.br-profile-feature-wealth b{font-size:32px}
+.br-profile-feature-wealth small{display:block;color:#8d98aa;font-size:12px;line-height:1.35;margin-top:8px}
+.br-profile-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:12px}
+.br-profile-stat{min-height:96px;padding:18px 20px;border-radius:20px;border:1px solid var(--brp-line);background:linear-gradient(180deg,rgba(255,255,255,.030),rgba(255,255,255,.016))}
+.br-profile-stat b{display:block;margin-top:9px;font-size:21px;letter-spacing:-.025em}
+.br-profile-trend{display:grid;grid-template-columns:minmax(0,1fr) 170px;align-items:center;gap:18px;margin-top:14px;padding:18px 20px;border:1px solid var(--brp-line);border-radius:20px;background:linear-gradient(180deg,rgba(255,255,255,.025),rgba(255,255,255,.014))}
+.br-profile-section-title{color:#8d98aa;font-size:10px;letter-spacing:.12em;text-transform:uppercase;font-weight:900;margin-bottom:9px}
+.br-profile-delta{display:inline-flex;border-radius:999px;border:1px solid rgba(255,255,255,.08);padding:6px 9px;font-size:10px;font-weight:900}
+.br-profile-delta.down{color:#ff8b9b;border-color:rgba(255,79,104,.26);background:rgba(255,79,104,.08)}
+.br-profile-delta.up{color:#77eabb;border-color:rgba(110,231,183,.22);background:rgba(110,231,183,.07)}
+.br-profile-delta.flat{color:#9aa5b5}
+.br-profile-trend svg{width:170px;height:48px;justify-self:end;overflow:visible}
+.br-profile-trend polyline{fill:none;stroke:#ff6579;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+.br-profile-history{margin-top:14px;padding:16px 20px;border:1px solid var(--brp-line);border-radius:20px;background:linear-gradient(180deg,rgba(255,255,255,.022),rgba(255,255,255,.012))}
+.br-profile-history-row{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:9px 0;border-top:1px solid rgba(255,255,255,.055)}
+.br-profile-history-row:nth-child(2){border-top:0}
+.br-profile-history-row b{font-size:11px}.br-profile-history-row b.down{color:#ff7185}.br-profile-history-row b.up{color:#6ee7b7}.br-profile-history-row time{color:#778297;font-size:10px}
+.br-profile-history-empty p{margin:0;color:#778297;font-size:11px}
+.br-profile-assets{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:14px}
+.br-profile-assets>div,.br-profile-assets>a{min-height:92px;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:8px;padding:14px 16px;border:1px solid var(--brp-line);border-radius:18px;background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.017));text-decoration:none;color:#fff}
+.br-profile-assets>div span,.br-profile-assets>a span{font-size:11px;color:#aab3c2}.br-profile-assets>div b{font-size:24px}.br-profile-assets>a b{font-size:15px}
+.br-profile-assets>a:hover{border-color:rgba(255,79,104,.33);background:rgba(255,79,104,.045)}
+.br-profile-link-state{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:14px;padding:12px 14px;border:1px solid rgba(110,231,183,.18);border-radius:14px;background:rgba(110,231,183,.035)}
+.br-profile-link-state span{color:#6ee7b7;font-size:9px;letter-spacing:.12em;font-weight:900}.br-profile-link-state b{color:#9aa6b7;font-size:11px;font-weight:700}
+.br-profile-controls{grid-template-columns:1fr 1fr!important;gap:10px!important;margin-top:14px!important}
+.br-profile-controls .br-primary{grid-column:1/-1}
+.br-profile-controls .br-secondary{min-height:48px;border-radius:14px!important;background:rgba(255,255,255,.025)!important;border-color:rgba(255,255,255,.09)!important}
+.br-profile-controls .br-secondary:hover{background:rgba(255,255,255,.055)!important}
+.br-profile-controls .br-logout{color:#8f99a9!important}
+
+/* Legacy/non-linked account state still gets the same visual language */
+.br-identity{padding:0 0 20px!important}
+.br-avatar{width:64px!important;height:64px!important;border-radius:18px!important;background:linear-gradient(145deg,#e83e5d,#801c35)!important}
+.br-status{border-radius:18px!important;background:rgba(255,255,255,.018)!important;border-color:rgba(255,255,255,.09)!important}
+.br-status[data-status=approved]{border-color:rgba(110,231,183,.25)!important}.br-status[data-status=approved] b{color:#6ee7b7!important}
+.br-primary,.br-secondary{border-radius:14px!important;min-height:48px!important}
+
+@media(max-width:720px){
+  #profileModal{padding:10px!important}
+  #profileModal .profile-card{width:100%!important;max-height:calc(100dvh - 20px)!important;padding:24px 18px 20px!important;border-radius:22px!important}
+  #profileContent .profile-modal-title,.br-account-dialog h2{font-size:28px!important}
+  #profileContent .profile-head,.br-profile-hero{align-items:flex-start!important;gap:14px!important}
+  #profileContent .profile-head .avatar,.br-profile-avatar{width:70px!important;height:70px!important;min-width:70px!important;border-radius:20px!important}
+  #profileContent .profile-title h3,.br-profile-identity strong{font-size:28px!important}
+  #profileContent .profile-title p,.br-profile-identity p{font-size:16px!important}
+  #profileContent .profile-feature,.br-profile-feature{grid-template-columns:1fr!important}
+  #profileContent .profile-feature-rank,.br-profile-feature-rank{border-right:0!important;border-bottom:1px solid rgba(255,255,255,.08)!important}
+  #profileContent .profile-feature-rank,#profileContent .profile-feature-wealth,.br-profile-feature-rank,.br-profile-feature-wealth{min-height:auto!important;padding:18px!important}
+  #profileContent .profile-feature b,.br-profile-feature b{font-size:30px!important}
+  #profileContent .profile-feature-wealth b,.br-profile-feature-wealth b{font-size:26px!important}
+  #profileContent .profile-grid,.br-profile-grid{grid-template-columns:1fr 1fr!important;gap:9px!important}
+  #profileContent .profile-stat,.br-profile-stat{min-height:82px!important;padding:14px!important}
+  #profileContent .profile-stat b,.br-profile-stat b{font-size:17px!important}
+  #profileContent .profile-trend-card,.br-profile-trend{grid-template-columns:1fr!important;padding:15px!important}
+  #profileContent .profile-trend-card .rank-spark,.br-profile-trend svg{justify-self:start!important;width:100%!important;max-width:240px!important}
+  #profileContent .profile-actions,.br-profile-assets{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  #profileContent .profile-action-card,.br-profile-assets>div,.br-profile-assets>a{min-height:82px!important;padding:12px 14px!important}
+  .br-account-dialog.br-account-profile-view{width:calc(100vw - 20px)!important;max-height:calc(100dvh - 20px)!important}
+  .br-account-inner{padding:24px 18px 20px!important}
+  .br-profile-link-state{align-items:flex-start;flex-direction:column}
+}
+
+@media(max-width:430px){
+  #profileContent .profile-grid,.br-profile-grid{grid-template-columns:1fr!important}
+  #profileContent .profile-actions,.br-profile-assets{grid-template-columns:1fr 1fr!important}
+  .br-profile-controls{grid-template-columns:1fr!important}.br-profile-controls .br-primary{grid-column:auto}
+}
+
+.br-profile-controls a.br-secondary{display:flex!important;align-items:center;justify-content:center;text-decoration:none!important;text-align:center}

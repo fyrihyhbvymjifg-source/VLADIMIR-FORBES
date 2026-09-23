@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#08090d">
+  <title>События Forbes — BLACK RUSSIA • Server 78 Vladimir</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon.png">
+  <link rel="shortcut icon" href="assets/favicon.ico">
+  <link rel="stylesheet" href="assets/site.final.css?v=9.1.3">
+  <link rel="stylesheet" href="assets/forbes.events.css?v=1.0">
+<link rel="stylesheet" href="assets/player-hovercard.css?v=1.0"><link rel="preconnect" href="https://www.gstatic.com" crossorigin><link rel="dns-prefetch" href="//www.gstatic.com"><link rel="stylesheet" href="assets/mobile.performance.v665.css?v=6.6.5"></head>
+<body class="forbes-events-page">
+<header class="topbar events-topbar">
+  <div class="shell topbar-inner">
+    <a class="brand" href="index.html"><span class="brand-mark">BR</span><span class="brand-copy"><strong>BLACK RUSSIA • FORBES</strong><span>SERVER 78 • VLADIMIR</span></span></a>
+    <nav class="nav" aria-label="Основная навигация">
+      <a href="admins.html">Администрация</a>
+      <a href="leaders.html">Лидеры</a>
+      <a class="active" href="events.html">🔥 События</a>
+      <a href="chat.html">💬 Чат</a>
+      <a href="support.html">🎫 Поддержка</a>
+      <a href="achievements.html">Достижения</a>
+      <a class="forbes-home-link" href="index.html">🏆 Forbes</a>
+      <a href="forbes-login.html">🔐 Войти</a>
+    </nav>
+  </div>
+</header>
+
+<main class="events-main">
+  <section class="events-hero">
+    <div class="shell">
+      <div class="events-hero-card">
+        <div class="events-hero-copy">
+          <span class="events-kicker">LIVE • FORBES 78</span>
+          <h1>События <em>Forbes</em></h1>
+          <p>Росты, падения, изменения состояния, новые участники и достижения — последние важные изменения рейтинга в одном месте.</p>
+          <div class="events-hero-actions"><button class="events-btn primary" id="eventsRefreshBtn" type="button">↻ Обновить</button><a class="events-btn" href="index.html">← Вернуться в Forbes</a></div>
+        </div>
+        <div class="events-hero-mark" aria-hidden="true"><span>78</span><b>VLADIMIR</b></div>
+      </div>
+      <div class="events-stats" aria-label="Статистика загруженных событий">
+        <article><span class="event-stat-icon gold">▤</span><div><b id="eventCountStat">0</b><small>загружено событий</small></div></article>
+        <article><span class="event-stat-icon blue">↗</span><div><b id="eventGrowthStat">0</b><small>ростов в рейтинге</small></div></article>
+        <article><span class="event-stat-icon green">＋</span><div><b id="eventNewStat">0</b><small>новых участников</small></div></article>
+        <article><span class="event-stat-icon red">↘</span><div><b id="eventFallStat">0</b><small>падений в рейтинге</small></div></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="shell events-layout">
+    <section class="events-feed-card">
+      <div class="events-feed-head">
+        <div><span class="events-section-icon">🔥</span><div><h2>Лента событий</h2><p>По умолчанию загружаются только последние 35 записей — старые по кнопке.</p></div></div>
+        <div class="events-search"><span>⌕</span><input id="eventsSearchInput" type="search" placeholder="Игрок или событие…" autocomplete="off"></div>
+      </div>
+      <div class="events-filters" id="eventsFilters">
+        <button class="active" type="button" data-event-filter="all">Все</button>
+        <button type="button" data-event-filter="rank">Рейтинг</button>
+        <button type="button" data-event-filter="wealth">Состояние</button>
+        <button type="button" data-event-filter="achievement">Достижения</button>
+        <button type="button" data-event-filter="joined">Новые игроки</button>
+      </div>
+      <div class="events-list" id="eventsList"><div class="events-loading">Загрузка последних событий…</div></div>
+      <div class="events-load-more-wrap"><button class="events-load-more" id="eventsLoadMoreBtn" type="button" hidden>Показать ещё 35 событий ↓</button></div>
+    </section>
+
+    <aside class="events-sidebar">
+      <section class="events-side-card">
+        <div class="events-side-head"><div><span>👑</span><b>Популярное в ленте</b></div><small>по загруженным событиям</small></div>
+        <div class="events-popular" id="eventsPopular"><div class="events-side-empty">Пока нет данных.</div></div>
+      </section>
+      <section class="events-side-card compact">
+        <div class="events-side-head"><div><span>⚡</span><b>Быстрые фильтры</b></div><button id="eventsResetFilters" type="button">Сбросить</button></div>
+        <div class="events-quick-grid">
+          <button type="button" data-quick-filter="growth">↗ Только росты</button>
+          <button type="button" data-quick-filter="falls">↘ Только падения</button>
+          <button type="button" data-quick-filter="wealth">💰 Состояние</button>
+          <button type="button" data-quick-filter="achievement">⭐ Достижения</button>
+        </div>
+      </section>
+      <section class="events-side-card traffic-card">
+        <div class="traffic-icon">◫</div>
+        <div><b>Экономный режим базы</b><p>Страница не держит постоянный realtime-listener: 35 событий читаются один раз, старые — только по нажатию.</p></div>
+      </section>
+    </aside>
+  </section>
+</main>
+
+<div class="events-player-modal" id="eventsPlayerModal" hidden>
+  <button class="events-player-backdrop" type="button" data-events-player-close aria-label="Закрыть"></button>
+  <article class="events-player-card"><button class="events-player-close" type="button" data-events-player-close>×</button><div id="eventsPlayerContent"><div class="events-loading">Загрузка профиля…</div></div></article>
+</div>
+
+<footer class="events-footer"><div class="shell"><span>BLACK RUSSIA • FORBES 78</span><small>Лента событий сервера Vladimir</small></div></footer>
+
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
+<script src="assets/firebase-config.js?v=9.6.2"></script>
+<script src="assets/forbes.events.js?v=1.0"></script>
+<script src="assets/player-hovercard.js?v=1.0"></script><script src="assets/runtime.optimize.v665.js?v=6.6.5" defer></script></body>
+</html>

@@ -1,0 +1,144 @@
+/* V9.3.2 — restore original ranking design; only fix place numbers and width stability. */
+#rating .ranking-wrap,
+#ranking{
+  width:100%;
+  min-width:0;
+  max-width:100%;
+}
+
+#ranking .rank-row{
+  width:100%;
+  min-width:0;
+  max-width:100%;
+  box-sizing:border-box;
+}
+
+#ranking .rank-place{
+  min-width:0;
+}
+
+#ranking .rank-num{
+  flex:0 0 40px;
+  width:40px;
+  height:40px;
+  display:grid;
+  place-items:center;
+  line-height:1;
+}
+
+#ranking .rank-num span{
+  width:38px!important;
+  height:38px!important;
+  display:grid!important;
+  place-items:center!important;
+  padding:0!important;
+  margin:0!important;
+  border-radius:11px!important;
+  font-size:13px!important;
+  line-height:1!important;
+  font-weight:900!important;
+  letter-spacing:0!important;
+  font-variant-numeric:tabular-nums;
+  filter:none!important;
+  box-sizing:border-box!important;
+}
+
+/* Top 3 stay special, but use clean numbers instead of emoji medals. */
+#ranking .rank-row[data-rank="1"] .rank-num span{
+  color:#ffd96a!important;
+  border-color:rgba(255,217,106,.30)!important;
+  background:rgba(255,217,106,.09)!important;
+}
+#ranking .rank-row[data-rank="2"] .rank-num span{
+  color:#dce5f1!important;
+  border-color:rgba(220,229,241,.24)!important;
+  background:rgba(220,229,241,.07)!important;
+}
+#ranking .rank-row[data-rank="3"] .rank-num span{
+  color:#d99562!important;
+  border-color:rgba(217,149,98,.26)!important;
+  background:rgba(217,149,98,.08)!important;
+}
+
+/* Do not let the first column eat the whole table on small screens. */
+@media (max-width:680px){
+  #rating .shell{
+    width:min(100% - 22px,1180px)!important;
+  }
+  #rating .ranking-wrap{
+    overflow:hidden!important;
+  }
+  #ranking{
+    display:block!important;
+    width:100%!important;
+  }
+  #ranking .rank-row{
+    display:grid!important;
+    grid-template-columns:78px minmax(0,1fr)!important;
+    grid-template-areas:"place identity" "place action"!important;
+    gap:7px 10px!important;
+    padding:11px 12px!important;
+    min-height:88px!important;
+    align-items:start!important;
+  }
+  #ranking .rank-place{
+    grid-area:place!important;
+    width:78px!important;
+    min-width:78px!important;
+    display:flex!important;
+    flex-direction:row!important;
+    align-items:center!important;
+    justify-content:flex-start!important;
+    gap:6px!important;
+  }
+  #ranking .rank-num{
+    flex-basis:36px!important;
+    width:36px!important;
+    height:36px!important;
+  }
+  #ranking .rank-num span{
+    width:34px!important;
+    height:34px!important;
+    font-size:12px!important;
+    border-radius:10px!important;
+  }
+  #ranking .rank-avatar-stack,
+  #ranking .rank-avatar{
+    width:36px!important;
+    height:36px!important;
+    min-width:36px!important;
+    flex-basis:36px!important;
+    margin:0!important;
+  }
+  #ranking .rank-avatar-stack>.movement-badge{
+    display:none!important;
+  }
+  #ranking .identity{
+    grid-area:identity!important;
+    min-width:0!important;
+    width:100%!important;
+    padding:0!important;
+  }
+  #ranking .row-action{
+    grid-area:action!important;
+    justify-self:start!important;
+    margin:0!important;
+  }
+  #ranking .person-name,
+  #ranking .wealth-cell{
+    display:none!important;
+  }
+}
+
+@media (max-width:390px){
+  #ranking .rank-row{
+    grid-template-columns:74px minmax(0,1fr)!important;
+    gap:6px 8px!important;
+    padding:10px!important;
+  }
+  #ranking .rank-place{
+    width:74px!important;
+    min-width:74px!important;
+    gap:5px!important;
+  }
+}
