@@ -1,0 +1,61 @@
+(()=>{
+ 'use strict';
+ const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ const defs={techs:{title:'🛠 Технические администраторы',permission:'admins',fields:{nick:'Ник',name:'Имя',role:'Должность',server:'Сервер',vk:'VK',note:'Описание'}},servers:{title:'🚀 Серверы BLACK RUSSIA',permission:'settings',fields:{number:'Номер',name:'Название',status:'Статус',link:'Основная ссылка',responsible:'Ответственные админы',forum:'Форум',vk:'VK',note:'Описание'}}};
+ const states={};
+ const nav=document.querySelector('.side-nav'),content=document.querySelector('.content');if(!nav||!content)return;
+ let db;
+ const access=()=>window.BRAdminAccess;
+ Object.entries(defs).forEach(([type,d])=>{
+  const button=document.createElement('button');button.className='nav-btn';button.type='button';button.textContent=d.title;button.hidden=true;nav.append(button);
+  const section=document.createElement('section');section.className='view';section.id='view-'+type;
+  section.innerHTML=`<div class="view-head"><div><h2>${d.title}</h2><p>Добавляйте записи и сохраняйте изменения для всех устройств.</p></div><a class="btn" href="${type}.html" target="_blank">Открыть страницу ↗</a></div><div class="actions"><button class="btn" data-add>+ Добавить</button><button class="btn red" data-save>Сохранить</button><button class="btn" data-cancel>Отменить изменения</button></div><div class="admin-directory-summary" data-summary></div><div class="admin-directory-toolbar"><input class="input" data-search type="search" placeholder="Поиск по записям…"><select class="input" data-filter><option value="all">Все записи</option><option value="active">Активные</option><option value="inactive">Неактивные</option></select></div><p class="notice" data-status>Загрузка…</p><div data-list></div>`;content.append(section);
+  const s=states[type]={rows:[],saved:[],dirty:false,loaded:false,section,button};
+  const status=t=>section.querySelector('[data-status]').textContent=t;
+  if(type==='techs'){
+    const update=document.createElement('button');update.type='button';update.className='btn';update.dataset.add='import';update.textContent='↻ Обновить состав';section.querySelector('.actions').append(update);
+    update.onclick=()=>{
+      if(!access()?.canWrite?.(d.permission))return;
+      const dialog=document.createElement('dialog');dialog.className='roster-import';dialog.innerHTML='<h2>Обновить состав</h2><p>Вставьте список в формате «01 | RED», затем ник специалиста. Отсутствующие в тексте серверы сохранятся.</p><textarea class="input" rows="10" placeholder="01 | RED\nAdai_Adaioov – VK"></textarea><p data-import-status role="status"></p><div data-preview></div><div class="actions"><button class="btn" data-analyze>Показать изменения</button><button class="btn red" data-apply disabled>Применить в редакторе</button><button class="btn" data-close>Отмена</button></div>';
+      document.body.append(dialog);dialog.showModal();let next=null;
+      const feedback=t=>dialog.querySelector('[data-import-status]').textContent=t;
+      dialog.querySelector('[data-close]').onclick=()=>dialog.close();dialog.addEventListener('close',()=>dialog.remove());
+      dialog.querySelector('textarea').oninput=()=>{next=null;dialog.querySelector('[data-apply]').disabled=true;};
+      dialog.querySelector('[data-analyze]').onclick=()=>{
+        const text=dialog.querySelector('textarea').value.replace(/[\u200B-\u200D\uFEFF]/g,'');
+        const blocks=[...text.matchAll(/(?:^|\n)\s*(?:(\d{1,2})\s*\|\s*([A-Z][A-Z.\s]*?)|(?:((?:RIO))\s*))\s*\n([\s\S]*?)(?=\n\s*(?:\d{1,2}\s*\||RIO\s*(?:\n|$))|$)/g)];
+        if(!blocks.length){next=null;feedback('Разделы не распознаны. Пример: 01 | RED, на следующей строке ник.');return;}
+        next=structuredClone(s.rows);const changes=[],seen=new Set();let errors=0;
+        for(const b of blocks){const number=b[3]?'RIO':String(Number(b[1])),name=(b[2]||b[3]).trim();if(seen.has(number)){errors++;continue;}seen.add(number);const body=b[4].trim(),vacant=/Временно отсутствует/i.test(body),nick=vacant?'':body.split(/\n/).find(l=>l.trim())?.split(/\s+[–—-]\s*|\s*–\s*|\s*—\s*/)[0].trim();if(!vacant&&(!nick||!/^[\p{L}\p{N}_ .-]{2,64}$/u.test(nick))){errors++;continue;}const index=next.findIndex(r=>String(r.server).split(/\s*[·|]\s*/)[0].replace(/^0+(?=\d)/,'')===number);const old=index>=0?next[index]:null;const url=body.match(/https?:\/\/[^\s<>]+/i)?.[0];const row={...(old||{}),id:old?.id||'tech-'+number+'-'+Date.now(),nick,name:vacant?'Временно отсутствует':'',server:number+' · '+name,role:old?.role||'Технический специалист · логирование',vk:url||old?.vk||'',active:!vacant,note:old?.note||''};if(!old||old.nick!==row.nick||old.active!==row.active||old.vk!==row.vk){changes.push({server:row.server,old:old?.nick||'Вакансия',next:row.nick||'Вакансия'});if(index>=0)next[index]=row;else next.push(row);}}
+        feedback('Распознано: '+blocks.length+' · Изменений: '+changes.length+' · Ошибок: '+errors);
+        dialog.querySelector('[data-preview]').innerHTML=changes.map(c=>'<div class="notice"><b>'+esc(c.server)+'</b><p>'+esc(c.old)+' → '+esc(c.next)+'</p></div>').join('')||'<p>Изменений нет.</p>';
+        dialog.querySelector('[data-apply]').disabled=errors>0||!changes.length;if(errors)next=null;
+      };
+      dialog.querySelector('[data-apply]').onclick=()=>{if(!next||!access()?.canWrite?.(d.permission))return;s.rows=next;s.dirty=true;render();status('Состав обновлён в редакторе. Нажмите «Сохранить» для публикации.');dialog.close();};
+    };
+  }
+  const seedButton=document.createElement('button');seedButton.className='btn';seedButton.type='button';seedButton.textContent='Загрузить предоставленный список';seedButton.dataset.add='seed';section.querySelector('.actions').append(seedButton);
+  seedButton.onclick=()=>{if(!access()?.canWrite?.(d.permission))return;const seed=window.BR_DIRECTORY_SEED?.[type]||[];const seen=new Set(s.rows.map(r=>String(type==='servers'?r.number:r.server)));let count=0;seed.forEach(r=>{const key=String(type==='servers'?r.number:r.server);if(!seen.has(key)){s.rows.push(structuredClone(r));seen.add(key);count++;}});s.dirty=count>0||s.dirty;render();status('Добавлено записей: '+count+'. Нажмите «Сохранить» для публикации.');};
+  function render(){section.querySelector('[data-summary]').innerHTML=`<span><b>${s.rows.length}</b> Всего записей</span><span><b>${s.rows.filter(r=>r.active!==false).length}</b> Активных</span>`;section.querySelector('[data-list]').innerHTML=s.rows.length?s.rows.map((r,i)=>`<details class="setting-card directory-record" data-record="${i}" style="margin:12px 0"><summary class="admin-record-head"><div><h3>${esc(type==='techs'?(r.nick||r.name||'Новая запись'):(r.name||'Новая запись'))}</h3><small>Запись ${i+1} · ${r.active===false?'Неактивна':'Активна'}</small></div><span class="record-edit-hint">Редактировать <span aria-hidden="true">⌄</span></span></summary><div class="site-settings-form">${Object.entries(d.fields).map(([k,label])=>k==='status'?`<label>Статус<select class="input" data-row="${i}" data-field="status">${Object.entries({unknown:'Не указан',working:'Работает',maintenance:'Техработы',issues:'Проблемы'}).map(([v,t])=>`<option value="${v}" ${r.status===v?'selected':''}>${t}</option>`).join('')}</select></label>`:`<label>${label}<input class="input" data-row="${i}" data-field="${k}" value="${esc(r[k])}" maxlength="${k==='note'?500:300}"></label>`).join('')}<label class="record-active"><input type="checkbox" data-row="${i}" data-field="active" ${r.active!==false?'checked':''}> Активен</label></div><button class="btn danger" data-delete="${i}" type="button">Удалить запись</button></details>`).join(''):'<div class="admin-empty"><h3>Здесь появятся ваши записи</h3><p>Добавьте первую запись, заполните поля и сохраните её.</p><button class="btn red" type="button" data-empty-add>+ Добавить первую запись</button></div>';syncAccess();filterRows();}
+  function syncAccess(){const a=access(),view=a?.can?.(d.permission);button.hidden=!view;section.querySelectorAll('[data-field],[data-add],[data-save],[data-cancel],[data-delete],[data-empty-add]').forEach(el=>el.disabled=!a?.canWrite?.(d.permission));}
+  button.addEventListener('click',()=>{if(!access()?.can?.(d.permission))return;document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v===section));document.querySelectorAll('.nav-btn').forEach(b=>b.classList.toggle('active',b===button));document.getElementById('topTitle').textContent=d.title;render();});
+  function filterRows(){const q=section.querySelector('[data-search]').value.trim().toLocaleLowerCase('ru'),f=section.querySelector('[data-filter]').value;section.querySelectorAll('[data-record]').forEach(el=>{const r=s.rows[Number(el.dataset.record)];el.hidden=(q&&!Object.values(r).some(v=>String(v).toLocaleLowerCase('ru').includes(q)))||(f==='active'&&r.active===false)||(f==='inactive'&&r.active!==false);});}
+  section.querySelector('[data-search]').addEventListener('input',filterRows);section.querySelector('[data-filter]').addEventListener('change',filterRows);section.addEventListener('click',e=>{if(e.target.closest('[data-empty-add]'))section.querySelector('[data-add]').click();});
+  section.addEventListener('input',e=>{const el=e.target;if(!el.dataset.field||!access()?.canWrite?.(d.permission))return;const r=s.rows[Number(el.dataset.row)];r[el.dataset.field]=el.type==='checkbox'?el.checked:el.value;s.dirty=true;status('Есть несохранённые изменения');});
+  section.querySelector('[data-add]').onclick=()=>{if(!access()?.canWrite?.(d.permission))return;s.rows.push({id:type+'-'+Date.now()+'-'+Math.random().toString(36).slice(2,7),active:true,status:'working'});s.dirty=true;render();const added=section.querySelector('[data-record="'+(s.rows.length-1)+'"]');if(added){added.open=true;added.hidden=false;added.scrollIntoView({block:'center',behavior:'smooth'});}status('Новая запись — заполните поля и сохраните');};
+  section.addEventListener('click',e=>{const b=e.target.closest('[data-delete]');if(!b||!access()?.canWrite?.(d.permission))return;if(confirm('Удалить эту запись? Изменение применится после сохранения.')){s.rows.splice(Number(b.dataset.delete),1);s.dirty=true;render();status('Удаление ожидает сохранения');}});
+  section.querySelector('[data-cancel]').onclick=()=>{s.rows=structuredClone(s.saved);s.dirty=false;render();status('Изменения отменены');};
+  section.querySelector('[data-save]').onclick=async()=>{
+   if(!access()?.canWrite?.(d.permission))return;
+   if(!db||!s.loaded)return status('Данные ещё не загружены. Повторите после подключения Firebase.');
+   for(const r of s.rows){if(!(type==='techs'?(r.nick||r.name):r.name))return status('Заполните имя или ник каждой записи');for(const k of ['vk','forum','link'])if(r[k]&&!/^https?:\/\//i.test(r[k]))return status('Ссылки должны начинаться с https://');}
+   const model={initialized:true,rows:s.rows.map((r,i)=>({...r,order:i+1})),updatedAt:Date.now(),updatedBy:access()?.alias||''};
+   const save=section.querySelector('[data-save]');save.disabled=true;status('Сохранение…');
+   try{await db.ref('settings/directories/'+type).set(model);s.saved=structuredClone(model.rows);s.dirty=false;status('Сохранено в Firebase');}catch(e){status('Не удалось сохранить: '+(e.code||e.message||'Ошибка подключения')+'. Изменения остаются в редакторе.');}finally{syncAccess();}
+  };
+  s.receive=model=>{s.loaded=true;const rows=Array.isArray(model?.rows)?model.rows.filter(Boolean):Object.values(model?.rows||{});if(!model?.initialized&&!rows.length)rows.push(...(window.BR_DIRECTORY_SEED?.[type]||[]));s.saved=structuredClone(rows);if(!s.dirty){s.rows=structuredClone(rows);render();status('Данные загружены');}};
+  render();
+ });
+ function init(){Object.values(states).forEach(s=>s.button.hidden=!access()?.can?.(defs[s.section.id.slice(5)].permission));if(db||!window.firebase?.apps?.length)return;try{db=firebase.database();Object.entries(states).forEach(([type,s])=>db.ref('settings/directories/'+type).on('value',snap=>s.receive(snap.val()),e=>{s.section.querySelector('[data-status]').textContent='Ошибка загрузки: '+(e.code||e.message);}));}catch{}}
+ window.addEventListener('beforeunload',e=>{if(Object.values(states).some(s=>s.dirty)){e.preventDefault();e.returnValue='';}});setInterval(init,1000);init();
+})();
