@@ -1,0 +1,175 @@
+/* BLACK RUSSIA FORBES V9.4.1 — FULL ADMIN LAYOUT FIX
+   Loaded LAST. It only fixes geometry/responsiveness and never changes the low-end layout size. */
+
+html,body{width:100%;max-width:100%;min-width:0}
+body{overflow-x:hidden}
+
+/* Never let desktop content collapse to the old 1500px/zoom-looking column. */
+.app{width:100%!important;max-width:none!important;grid-template-columns:232px minmax(0,1fr)!important}
+.main{width:100%!important;max-width:none!important;min-width:0!important}
+.content{width:100%!important;max-width:none!important;min-width:0!important;box-sizing:border-box!important}
+.view{width:100%!important;max-width:none!important;min-width:0!important}
+
+/* Performance modes may remove effects, but MUST NOT resize the UI. */
+html[data-performance="low"] .app,
+html[data-device-tier="optimized"] .app,
+html[data-safe-mode="1"] .app,
+body.admin-lite .app{transform:none!important;zoom:1!important}
+html[data-performance="low"] .main,
+html[data-performance="low"] .content,
+html[data-device-tier="optimized"] .main,
+html[data-device-tier="optimized"] .content,
+html[data-safe-mode="1"] .main,
+html[data-safe-mode="1"] .content,
+body.admin-lite .main,
+body.admin-lite .content{transform:none!important;zoom:1!important;max-width:none!important}
+
+/* =========================
+   SYSTEM — DESKTOP HARD RESET
+   ========================= */
+#view-system{width:100%!important;max-width:none!important;min-width:0!important}
+#view-system .system-shell{display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:18px!important;width:100%!important;max-width:none!important;min-width:0!important}
+#view-system .system-group{width:100%!important;max-width:none!important;min-width:0!important;margin:0!important;box-sizing:border-box!important;overflow:visible!important}
+#view-system .system-group-head{display:flex!important;align-items:flex-start!important;justify-content:space-between!important;gap:14px!important;flex-wrap:wrap!important}
+
+#view-system .system-grid,
+#view-system .system-grid-primary,
+#view-system .control-center-grid,
+#view-system .system-grid-maintenance{
+  width:100%!important;max-width:none!important;min-width:0!important;
+  display:grid!important;gap:14px!important;align-items:start!important;
+  transform:none!important;zoom:1!important;
+}
+
+/* Primary section: predictable named-card layout, no nth-child dependency. */
+#view-system .system-grid-primary{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+#view-system .system-grid-primary>.system-card{grid-column:auto!important;grid-row:auto!important;width:100%!important;max-width:none!important;min-width:0!important;height:auto!important;min-height:0!important;align-self:start!important}
+#view-system .system-grid-primary>.security-card,
+#view-system .system-grid-primary>.access-manager-card,
+#view-system .system-grid-primary>.admin-login-log-card{grid-column:1/-1!important}
+#view-system .system-grid-primary>.project-status-card{grid-column:1!important}
+#view-system .system-grid-primary>.error-center-card{grid-column:2!important}
+#view-system .system-grid-primary>.backup-card{grid-column:1!important}
+#view-system .system-grid-primary>.public-page-card{grid-column:2!important}
+
+/* Old version rules must never win. */
+#view-system .system-grid-primary>.system-card:nth-child(1),
+#view-system .system-grid-primary>.system-card:nth-child(2),
+#view-system .system-grid-primary>.system-card:nth-child(3),
+#view-system .system-grid-primary>.system-card:nth-child(4),
+#view-system .system-grid-primary>.system-card:nth-child(5),
+#view-system .system-grid-primary>.system-card:nth-child(6),
+#view-system .system-grid-primary>.system-card:nth-child(7){height:auto!important;min-height:0!important}
+
+#view-system .system-card,
+#view-system .setting-card,
+#view-system .control-center-card{width:100%!important;max-width:none!important;min-width:0!important;box-sizing:border-box!important;transform:none!important;zoom:1!important}
+
+/* Public site/stability cards. */
+#view-system .control-center-grid{grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr)!important}
+#view-system .control-center-grid>.system-card{width:100%!important;min-width:0!important;height:100%!important}
+
+/* Maintenance section. */
+#view-system .system-grid-maintenance{grid-template-columns:repeat(2,minmax(0,1fr))!important;align-items:stretch!important}
+#view-system .system-grid-maintenance>.system-card{width:100%!important;min-width:0!important;height:100%!important;min-height:0!important}
+#view-system .system-grid-maintenance>.notification-reset-card{grid-column:1/-1!important}
+
+/* Consistent internal geometry. */
+#view-system .setting-title-row,
+#view-system .access-manager-head,
+#view-system .staff-create-copy,
+#view-system .staff-permissions-head,
+#view-system .maintenance-scheduler-head{display:flex!important;align-items:flex-start!important;justify-content:space-between!important;gap:12px!important;flex-wrap:wrap!important}
+
+#view-system .system-card .actions{display:flex!important;align-items:center!important;gap:8px!important;flex-wrap:wrap!important;margin-top:12px!important}
+#view-system .system-card .actions>.btn,
+#view-system .system-card .actions>a.btn,
+#view-system .system-card .actions>label.btn{max-width:100%!important;min-width:0!important}
+
+/* Access manager. */
+#view-system .staff-rules-row{display:flex!important;align-items:stretch!important;gap:10px!important;flex-wrap:wrap!important}
+#view-system .staff-rules-row .staff-access-diag{flex:1 1 320px!important;min-width:0!important}
+#view-system .staff-rules-row>.btn{flex:0 0 auto!important}
+#view-system .staff-access-stats{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:10px!important}
+#view-system .staff-access-stats>div{min-width:0!important}
+#view-system .staff-create-panel{width:100%!important;min-width:0!important;overflow:visible!important}
+#view-system .staff-create-grid{display:grid!important;grid-template-columns:minmax(0,.9fr) minmax(0,1fr) minmax(0,1.15fr) auto!important;gap:10px!important;align-items:end!important;width:100%!important;margin:0!important}
+#view-system .staff-create-grid label,
+#view-system .staff-field-login,
+#view-system .staff-field-pass,
+#view-system .staff-field-role,
+#view-system .staff-password-wrap{min-width:0!important;width:100%!important}
+#view-system .staff-create-grid .input{width:100%!important;min-width:0!important;box-sizing:border-box!important}
+#view-system .staff-create-btn{height:44px!important;white-space:nowrap!important;padding-inline:16px!important}
+#view-system .staff-permission-presets{display:flex!important;gap:7px!important;flex-wrap:wrap!important}
+#view-system .permission-grid{width:100%!important;min-width:0!important}
+#view-system .staff-access-list{display:grid!important;gap:10px!important;width:100%!important;min-width:0!important}
+#view-system .staff-access-row{width:100%!important;min-width:0!important;grid-template-columns:minmax(0,1fr)!important}
+#view-system .staff-access-summary{display:grid!important;grid-template-columns:minmax(180px,.85fr) minmax(0,1.15fr) auto!important;gap:12px!important;align-items:center!important;width:100%!important;min-width:0!important}
+#view-system .staff-access-main,#view-system .staff-rights-preview,#view-system .staff-access-actions{min-width:0!important}
+#view-system .staff-access-actions{display:flex!important;gap:7px!important;flex-wrap:wrap!important;justify-content:flex-end!important;align-items:center!important}
+
+/* Status + errors. */
+#view-system .project-status-grid{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:9px!important;width:100%!important;min-width:0!important}
+#view-system .project-status-grid>div{min-width:0!important}
+#view-system .error-center-card{min-width:0!important;min-height:0!important}
+#view-system .error-center-toolbar{display:grid!important;grid-template-columns:minmax(150px,1fr) auto auto auto!important;gap:8px!important;align-items:center!important;width:100%!important;min-width:0!important}
+#view-system .error-center-toolbar .input{min-width:0!important;width:100%!important}
+#view-system .admin-error-list,#view-system .admin-login-log-list{width:100%!important;min-width:0!important;max-height:340px!important;overflow:auto!important}
+
+/* Maintenance scheduler. */
+#view-system .maintenance-scheduler{width:100%!important;min-width:0!important;box-sizing:border-box!important}
+#view-system .maintenance-scheduler-grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important}
+#view-system .maintenance-scheduler-grid label{min-width:0!important}
+#view-system .system-textarea{width:100%!important;max-width:100%!important;min-height:92px!important;box-sizing:border-box!important;resize:vertical!important}
+
+/* Medium desktop / tablets. */
+@media(max-width:1180px){
+  .app{grid-template-columns:76px minmax(0,1fr)!important}
+  #view-system .system-grid-primary{grid-template-columns:1fr!important}
+  #view-system .system-grid-primary>.security-card,
+  #view-system .system-grid-primary>.access-manager-card,
+  #view-system .system-grid-primary>.project-status-card,
+  #view-system .system-grid-primary>.error-center-card,
+  #view-system .system-grid-primary>.admin-login-log-card,
+  #view-system .system-grid-primary>.backup-card,
+  #view-system .system-grid-primary>.public-page-card{grid-column:1!important}
+  #view-system .control-center-grid{grid-template-columns:1fr!important}
+  #view-system .staff-create-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  #view-system .staff-field-role{grid-column:1/-1!important}
+  #view-system .staff-create-btn{width:100%!important}
+  #view-system .staff-access-summary{grid-template-columns:1fr!important}
+  #view-system .staff-access-actions{justify-content:flex-start!important}
+  #view-system .error-center-toolbar{grid-template-columns:1fr 1fr!important}
+  #view-system .error-center-toolbar .input{grid-column:1/-1!important}
+}
+
+/* Phone layout: full-width cards, no horizontal squeeze. */
+@media(max-width:700px){
+  .app{display:block!important;width:100%!important}
+  .main,.content,.view{width:100%!important;max-width:none!important}
+  #view-system .system-shell{gap:12px!important}
+  #view-system .system-group{padding:12px!important;border-radius:15px!important}
+  #view-system .system-grid-maintenance{grid-template-columns:1fr!important}
+  #view-system .system-grid-maintenance>.notification-reset-card{grid-column:1!important}
+  #view-system .staff-access-stats,
+  #view-system .project-status-grid,
+  #view-system .maintenance-scheduler-grid{grid-template-columns:1fr!important}
+  #view-system .staff-create-grid{grid-template-columns:1fr!important}
+  #view-system .staff-field-role{grid-column:1!important}
+  #view-system .staff-rules-row{flex-direction:column!important}
+  #view-system .staff-rules-row>.btn{width:100%!important;justify-content:center!important}
+  #view-system .staff-access-actions{display:grid!important;grid-template-columns:1fr!important;width:100%!important}
+  #view-system .staff-access-actions .btn{width:100%!important;justify-content:center!important}
+  #view-system .system-card .actions{display:grid!important;grid-template-columns:1fr!important;width:100%!important}
+  #view-system .system-card .actions>.btn,
+  #view-system .system-card .actions>a.btn,
+  #view-system .system-card .actions>label.btn{width:100%!important;justify-content:center!important}
+  #view-system .error-center-toolbar{grid-template-columns:1fr!important}
+  #view-system .error-center-toolbar .input{grid-column:auto!important}
+}
+
+/* V9.5.3 SYSTEM FREEZE SAFETY */
+#view-system.active{display:block!important;visibility:visible!important;opacity:1!important;min-height:320px}
+#view-system .system-shell{content-visibility:visible!important;contain:none!important}
+#view-system [hidden]{display:none!important}

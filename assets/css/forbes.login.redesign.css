@@ -1,0 +1,8 @@
+.br-simple-page{margin:0;min-height:100vh;background:radial-gradient(760px 380px at 50% 0,rgba(237,147,52,.09),transparent 65%),#07090d;color:#eef1f5;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;text-align:center}
+.br-simple-page>h1{margin:82px auto 8px;font-size:30px;letter-spacing:-.035em}
+.br-simple-page>h2{margin:0 auto 24px;color:#8c95a4;font-size:14px;font-weight:700}
+.br-simple-page>input{display:block;width:min(360px,calc(100% - 36px));height:46px;margin:10px auto;padding:0 14px;color:#fff;background:#0c1017;border:1px solid rgba(255,255,255,.09);border-radius:12px;outline:none}
+.br-simple-page>input:focus{border-color:rgba(239,156,58,.42);box-shadow:0 0 0 4px rgba(239,156,58,.06)}
+.br-simple-page>button{height:44px;margin-top:8px;padding:0 24px;border:1px solid rgba(236,146,47,.36);border-radius:12px;background:linear-gradient(180deg,rgba(225,139,43,.19),rgba(157,88,26,.11));color:#ffd698;font-weight:850;cursor:pointer}
+.br-simple-page>#msg{color:#aab2bf;font-size:13px}
+@media(max-width:560px){.br-simple-page>h1{margin-top:56px;font-size:25px}}

@@ -1,0 +1,19 @@
+/* Forbes mini profile hover card */
+.br-player-hover-target,
+[data-player-hover],
+[data-player-id].br-player-hover-target,
+[data-player-nick].br-player-hover-target{cursor:pointer}
+.br-player-hover-target:hover{color:#ff9a2f}
+.br-mini-profile-card{position:fixed;z-index:99999;width:min(340px,calc(100vw - 24px));padding:0;border:1px solid rgba(255,145,42,.34);border-radius:20px;background:linear-gradient(155deg,rgba(24,25,28,.98),rgba(9,10,12,.99));box-shadow:0 22px 70px rgba(0,0,0,.55),0 0 30px rgba(255,123,0,.08);color:#f6f7f9;opacity:0;visibility:hidden;transform:translateY(7px) scale(.985);transition:opacity .14s ease,transform .14s ease,visibility .14s ease;pointer-events:none;overflow:hidden;backdrop-filter:blur(16px)}
+.br-mini-profile-card.show{opacity:1;visibility:visible;transform:translateY(0) scale(1);pointer-events:auto}
+.br-mini-profile-glow{position:absolute;inset:-80px auto auto -60px;width:190px;height:190px;border-radius:50%;background:radial-gradient(circle,rgba(255,126,0,.18),transparent 68%);pointer-events:none}
+.br-mini-profile-head{position:relative;display:flex;gap:13px;align-items:center;padding:17px 17px 12px}
+.br-mini-profile-avatar{width:58px;height:58px;flex:0 0 58px;border-radius:16px;display:grid;place-items:center;background:linear-gradient(145deg,#ff9d2b,#e64b11);border:1px solid rgba(255,255,255,.16);box-shadow:0 8px 24px rgba(255,100,0,.18);font-weight:900;font-size:18px;overflow:hidden}
+.br-mini-profile-avatar img{width:100%;height:100%;object-fit:cover;display:block}
+.br-mini-profile-title{min-width:0;flex:1}.br-mini-profile-title small{display:block;color:#ff9b32;font-size:10px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;margin-bottom:4px}.br-mini-profile-title b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:17px;line-height:1.15}.br-mini-profile-title span{display:block;color:#8f96a3;font-size:12px;margin-top:4px}
+.br-mini-profile-rank{align-self:flex-start;min-width:54px;text-align:center;padding:8px 10px;border-radius:12px;background:rgba(255,128,0,.1);border:1px solid rgba(255,145,42,.22);color:#ffb14d;font-size:16px;font-weight:900}
+.br-mini-profile-grid{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:0 17px 14px}.br-mini-profile-stat{padding:10px 11px;border-radius:12px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.065)}.br-mini-profile-stat span{display:block;color:#787f8b;font-size:10px;text-transform:uppercase;letter-spacing:.07em;margin-bottom:3px}.br-mini-profile-stat b{font-size:13px;color:#f5f6f8}
+.br-mini-profile-actions{position:relative;display:flex;gap:8px;padding:0 17px 17px}.br-mini-profile-open{flex:1;display:flex;align-items:center;justify-content:center;min-height:40px;border-radius:12px;text-decoration:none!important;background:linear-gradient(135deg,#ff8a21,#ed4e15);color:#fff!important;font-size:12px;font-weight:900;box-shadow:0 8px 22px rgba(230,76,18,.18)}.br-mini-profile-close{display:none;width:40px;border:1px solid rgba(255,255,255,.08);border-radius:12px;background:rgba(255,255,255,.04);color:#bbb;font-size:20px}
+.br-mini-profile-loading{padding:18px;color:#9da3ad;font-size:12px;text-align:center}
+@media(max-width:720px){.br-mini-profile-card{width:min(330px,calc(100vw - 18px));border-radius:18px}.br-mini-profile-close{display:block}.br-mini-profile-head{padding:15px 15px 11px}.br-mini-profile-grid{padding:0 15px 12px}.br-mini-profile-actions{padding:0 15px 15px}}
+@media(prefers-reduced-motion:reduce){.br-mini-profile-card{transition:none}}

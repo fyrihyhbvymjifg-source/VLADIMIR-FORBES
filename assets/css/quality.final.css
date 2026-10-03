@@ -1,0 +1,135 @@
+:root{
+  --muted:#aab3c2;
+  --muted2:#7f899a;
+  --shadow:0 18px 52px rgba(0,0,0,.34);
+}
+html{
+  text-rendering:optimizeLegibility;
+  -webkit-text-size-adjust:100%;
+  font-synthesis:none;
+}
+body{
+  color:#f8fafc;
+  font-family:"Segoe UI Variable Text","Segoe UI",Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,Arial,sans-serif;
+  font-kerning:normal;
+  font-feature-settings:"kern" 1,"liga" 1,"calt" 1;
+}
+button,input,textarea,select{font-family:inherit}
+img{image-rendering:auto}
+
+/* Reduce the hazy look without removing the glass style. */
+.topbar{backdrop-filter:blur(9px) saturate(112%)!important;-webkit-backdrop-filter:blur(9px) saturate(112%)!important;background:rgba(7,9,13,.9)!important}
+html.glass-mode .hero-card,html.glass-mode .summary-card,html.glass-mode .podium-card,html.glass-mode .ranking-wrap,html.glass-mode .profile-card,html.glass-mode .announcement-card,html.glass-mode .creator-card,html.glass-mode .owner-easter-card{backdrop-filter:blur(8px) saturate(112%)!important;-webkit-backdrop-filter:blur(8px) saturate(112%)!important;background-color:rgba(10,14,21,.82)!important}
+.hero-card:after{filter:blur(2px)!important;opacity:.9}
+.podium-card,.ranking-wrap,.profile-card,.announcement-card,.summary-card,.hero-card{box-shadow:0 16px 48px rgba(0,0,0,.28)!important}
+
+/* Public site — slightly larger, brighter text. */
+.brand-copy strong{font-size:15px!important;letter-spacing:.1em}
+.brand-copy span{font-size:12px!important;color:#aeb7c6!important}
+.nav a{font-size:14px!important;font-weight:760!important}
+.eyebrow,.summary-label{font-size:13px!important}
+.hero-desc{font-size:17px!important;color:#b4bdcb!important;line-height:1.7}
+.meta-pill{font-size:13px!important}
+.live{font-size:12px!important}
+.server-name{font-size:18px!important}
+.stat span{font-size:12px!important;color:#aab4c3!important}
+.section-kicker{font-size:12px!important}
+.section-note{font-size:14px!important;color:#a7b0bf!important}
+.podium-nick{font-size:23px!important}
+.podium-name{font-size:14px!important;color:#aeb7c5!important}
+.rank-caption{font-size:12px!important;color:#909aac!important}
+.search input{font-size:14px!important}
+.filter-btn{font-size:12px!important}
+.result-count{font-size:13px!important;color:#a6afbd!important}
+.table-head{font-size:11px!important;color:#828c9e!important}
+.rank-num{font-size:14px!important}
+.identity strong{font-size:15px!important}
+.identity span{font-size:12px!important;color:#a9b3c1!important}
+.person-name{font-size:14px!important;color:#d2d8e2!important}
+.wealth-cell{font-size:14px!important}
+.vk-link,.ghost-btn{font-size:13px!important}
+.achievement-badge{font-size:9px!important;line-height:1.15!important}
+.movement-badge{font-size:9px!important}
+.creator-credit span,.creator-credit b{font-size:10px!important}
+.server-link b{font-size:11px!important}.server-link small{font-size:9px!important}
+
+/* Achievements page */
+.ach-kicker{font-size:11px!important}
+.ach-hero>p{font-size:15px!important;color:#aeb7c6!important}
+.ach-summary span{font-size:10px!important;color:#919cad!important}
+.ach-section-head span{font-size:10px!important}
+.ach-section-head p{font-size:12px!important;color:#9fa9b9!important}
+.ach-card h3{font-size:19px!important}
+.ach-card p{font-size:12px!important;color:#a4aebe!important;line-height:1.7!important}
+.ach-card-footer span{font-size:10px!important}.ach-count{font-size:11px!important}
+.ach-note p{font-size:12px!important;color:#a6b0c0!important}
+.ach-footer{font-size:10px!important}
+
+/* Creator page */
+.creator-hero{backdrop-filter:blur(8px) saturate(112%)!important;-webkit-backdrop-filter:blur(8px) saturate(112%)!important;background:rgba(13,17,25,.84)!important;box-shadow:0 18px 60px rgba(0,0,0,.32)!important}
+.back{font-size:13px!important}
+.kicker{font-size:11px!important}
+.roles{font-size:16px!important;color:#d2d8e1!important}
+.tags span{font-size:11px!important}
+.bio{font-size:14px!important;color:#aab4c3!important;line-height:1.75!important}
+.creator-stats small{font-size:9px!important;color:#8f9aab!important}
+.creator-stats b{font-size:13px!important}
+.creator-grid h2{font-size:18px!important}.creator-grid p{font-size:12px!important;color:#9ca7b8!important}
+.creator-actions b{font-size:13px!important}.creator-actions small{font-size:10px!important;color:#9aa5b6!important}
+
+/* Admin — crisp readable controls and labels. */
+body:has(.app),body:has(.login-screen){font-family:"Segoe UI Variable Text","Segoe UI",Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,Arial,sans-serif}
+.sidebar{backdrop-filter:blur(8px)!important;-webkit-backdrop-filter:blur(8px)!important}
+.panel,.setting-card,.modal-card,.login-card{box-shadow:0 14px 42px rgba(0,0,0,.28)!important}
+.page-title strong{font-size:15px!important}.page-title span{font-size:10px!important;color:#a3adbc!important}
+.nav-btn{font-size:12px!important}.nav-label{font-size:10px!important}
+.view-head h2{font-size:29px!important}.view-head p{font-size:12px!important;color:#a9b2c1!important;line-height:1.6!important}
+.btn{font-size:11px!important;font-weight:850!important}
+.input,textarea.input,select.input{font-size:13px!important;color:#f7f9fc!important}
+.field label,.edit-grid label,.site-settings-form label,.announcement-admin-label{font-size:11px!important;color:#bdc5d1!important}
+.kpi-top{font-size:10px!important}.kpi small{font-size:9px!important;color:#9da7b7!important}
+.panel-head h3,.setting-card h3{font-size:14px!important}.panel-head p,.setting-card p,.notice{font-size:11px!important;color:#a0aabb!important;line-height:1.55!important}
+.player-id strong{font-size:13px!important}.player-id span{font-size:10px!important;color:#9fa9b9!important}
+.row-btn,.save-one{font-size:11px!important}
+.drag-tip,.crud-title span,.deleted-head span,.deleted-row span,.deleted-row time{font-size:11px!important;color:#9fa9b8!important}
+.crud-title h3,.deleted-head strong,.deleted-row strong{font-size:12px!important}
+.stats-bar-value{font-size:11px!important}.stats-bar-label{font-size:10px!important}.stats-visit-row span{font-size:11px!important}.stats-visit-row time{font-size:10px!important}
+.device-row strong{font-size:12px!important}.device-row span{font-size:10px!important}.device-row b{font-size:12px!important}
+.stats-visit-row em{font-size:9px!important}
+.achievement-help summary{font-size:11px!important}.achievement-help-grid b{font-size:10px!important}.achievement-help-grid span{font-size:10px!important}
+.achievement-picker-grid span{font-size:11px!important}.achievement-picker-note{font-size:10px!important}
+.owner-badge{font-size:10px!important}.owner-dashboard-tags span,.owner-settings-tags span{font-size:10px!important}
+.custom-theme-hint{font-size:10px!important}
+
+/* Avoid tiny text on phones. */
+@media(max-width:680px){
+  .brand-copy strong{font-size:12px!important}.brand-copy span{font-size:10px!important}
+  .nav a{font-size:11px!important;padding:9px 10px!important}
+  .hero-desc{font-size:15px!important}
+  .section-note{font-size:13px!important}
+  .identity strong{font-size:14px!important}.identity span{font-size:11px!important}
+  .result-count{font-size:11px!important}
+  .achievement-badge{font-size:9px!important}
+}
+@media(max-width:700px){
+  .nav-btn span:last-child{font-size:9px!important}
+  .page-title strong{font-size:14px!important}.page-title span{font-size:9px!important}
+  .view-head p{font-size:11px!important}
+  .kpi-top{font-size:10px!important}.kpi small{font-size:9px!important}
+  .player-id strong{font-size:13px!important}.player-id span{font-size:9px!important}
+  .players-toolbar .btn,#saveAllTop{font-size:10px!important}
+  .drag-tip,.crud-title span{font-size:10px!important}
+}
+
+
+/* V8.5 CRISP UI — remove haze and make small text genuinely readable. */
+html,body{font-smooth:always;text-rendering:geometricPrecision}
+.topbar,.sidebar{backdrop-filter:none!important;-webkit-backdrop-filter:none!important;background:#080b10!important}
+html.glass-mode .hero-card,html.glass-mode .summary-card,html.glass-mode .podium-card,html.glass-mode .ranking-wrap,html.glass-mode .profile-card,html.glass-mode .announcement-card,html.glass-mode .creator-card,html.glass-mode .owner-easter-card{backdrop-filter:none!important;-webkit-backdrop-filter:none!important;background-color:rgba(10,14,21,.96)!important}
+.hero-card:after{filter:none!important;opacity:.38!important}
+.brand-copy strong{font-size:16px!important}.brand-copy span{font-size:12px!important}.nav a{font-size:14px!important}
+.table-head{font-size:12px!important}.identity strong{font-size:16px!important}.identity span{font-size:12px!important}.person-name,.wealth-cell{font-size:15px!important}.achievement-badge,.movement-badge{font-size:10px!important}
+.nav-btn{font-size:13px!important}.nav-label{font-size:11px!important}.page-title strong{font-size:16px!important}.page-title span{font-size:11px!important}
+.view-head p,.panel-head p,.setting-card p,.notice{font-size:12px!important}.btn{font-size:12px!important}.input,textarea.input,select.input{font-size:14px!important}.field label,.edit-grid label,.site-settings-form label,.announcement-admin-label{font-size:12px!important}
+.player-id strong{font-size:14px!important}.player-id span{font-size:11px!important}.row-btn,.save-one{font-size:12px!important}
+@media(max-width:700px){.nav-btn span:last-child{font-size:11px!important}.player-id strong{font-size:14px!important}.player-id span{font-size:10px!important}.btn{font-size:11px!important}}
