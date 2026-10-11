@@ -1,0 +1,199 @@
+/* BLACK FORBES splash loader — mobile-safe */
+html.br-loader-active,
+html.br-loader-active body{
+  background:#000!important;
+  overscroll-behavior:none!important;
+  min-height:100%!important;
+}
+body.br-loader-active{
+  overflow:hidden!important;
+  min-height:100vh!important;
+  min-height:100svh!important;
+  min-height:100dvh!important;
+  touch-action:none!important;
+}
+body.br-loader-active > *:not(.br-site-loader):not(script):not(style){
+  visibility:hidden!important;
+}
+.br-site-loader{
+  position:fixed!important;
+  inset:0!important;
+  z-index:2147483647!important;
+  width:100vw!important;
+  height:100vh!important;
+  height:100svh!important;
+  height:100dvh!important;
+  min-height:100vh!important;
+  min-height:100svh!important;
+  min-height:100dvh!important;
+  box-sizing:border-box!important;
+  padding:max(14px,env(safe-area-inset-top)) max(14px,env(safe-area-inset-right)) max(14px,env(safe-area-inset-bottom)) max(14px,env(safe-area-inset-left))!important;
+  display:grid!important;
+  place-items:center!important;
+  overflow:hidden!important;
+  isolation:isolate!important;
+  background:#000!important;
+  opacity:1!important;
+  visibility:visible!important;
+  transform:translateZ(0)!important;
+  -webkit-transform:translateZ(0)!important;
+  transition:opacity .6s ease,visibility .6s ease!important;
+}
+.br-site-loader:before{
+  content:"";position:absolute;inset:0;z-index:-2;background:#000!important;
+}
+.br-site-loader:after{
+  content:"";position:absolute;z-index:-1;width:min(88vw,560px);height:min(88vw,560px);border-radius:50%;
+  background:radial-gradient(circle,rgba(52,123,255,.10),rgba(52,123,255,.025) 38%,transparent 68%);
+  animation:bhAura 3.4s ease-in-out infinite!important;
+}
+.br-site-loader.is-leaving .bh-loader-stage{transform:scale(.975)!important;opacity:.3!important;transition:transform .36s ease,opacity .36s ease!important}
+.br-site-loader.is-hidden{opacity:0!important;visibility:hidden!important;pointer-events:none!important}
+.bh-loader-stage{
+  position:relative!important;z-index:2!important;text-align:center!important;transform:translateY(-1.5vh)!important;
+  width:min(100%,520px)!important;padding:20px!important;box-sizing:border-box!important;opacity:1!important;
+}
+.bh-loader-aura{position:absolute;left:50%;top:40%;width:330px;height:330px;max-width:82vw;max-height:82vw;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,rgba(35,94,235,.09),transparent 66%);filter:blur(12px);pointer-events:none;animation:bhLoaderAuraPulse 2.8s ease-in-out infinite!important}
+.bh-loader-logo{display:flex!important;justify-content:center!important;align-items:center!important;animation:bhFadeUp .85s cubic-bezier(.2,.8,.2,1) both!important}
+.bh-loader-badge{position:relative!important;width:170px!important;height:190px!important;display:grid!important;place-items:center!important;filter:drop-shadow(0 24px 48px rgba(0,0,0,.45))!important;animation:bhBadgeFloat 3s ease-in-out .9s infinite!important}
+.bh-loader-badge-outline{position:absolute!important;inset:0!important;border:8px solid rgba(255,255,255,.96)!important;border-radius:36px 74px 74px 36px / 34px 68px 68px 34px!important;box-sizing:border-box!important;animation:bhOutlineGlow 1.9s ease-in-out infinite!important}
+.bh-loader-letter{position:relative!important;color:transparent!important;width:132px!important;height:152px!important;border-radius:28px 58px 58px 28px / 26px 52px 52px 26px!important;background:#000!important;display:grid!important;place-items:center!important;font-family:Inter,system-ui,sans-serif!important;font-size:108px!important;line-height:1!important;font-weight:1000!important;letter-spacing:-.09em!important}
+.bh-loader-shape{position:absolute!important;display:block!important;animation:bhShapeFloat 2.1s ease-in-out infinite!important}
+.bh-loader-shape.shape-plus{left:56px!important;top:52px!important;width:24px!important;height:24px!important;animation-delay:.05s!important}
+.bh-loader-shape.shape-plus::before,.bh-loader-shape.shape-plus::after{content:""!important;position:absolute!important;background:#4d8dff!important;border-radius:2px!important}
+.bh-loader-shape.shape-plus::before{left:10px!important;top:0!important;width:4px!important;height:24px!important}.bh-loader-shape.shape-plus::after{left:0!important;top:10px!important;width:24px!important;height:4px!important}
+.bh-loader-shape.shape-square{right:40px!important;top:58px!important;width:22px!important;height:22px!important;border:5px solid #ff3535!important;box-sizing:border-box!important;animation-delay:.3s!important}
+.bh-loader-shape.shape-circle{left:62px!important;bottom:56px!important;width:24px!important;height:24px!important;border:5px solid #ffd200!important;border-radius:50%!important;box-sizing:border-box!important;animation-delay:.55s!important}
+.bh-loader-shape.shape-triangle{right:44px!important;bottom:50px!important;width:0!important;height:0!important;border-left:15px solid transparent!important;border-right:15px solid transparent!important;border-bottom:25px solid #38e66f!important;animation-delay:.8s!important}
+.bh-loader-wordmark{margin-top:26px!important;animation:bhFadeUp 1s .12s cubic-bezier(.2,.8,.2,1) both!important}
+.bh-loader-title{color:#fff!important;font-family:Inter,system-ui,sans-serif!important;font-size:68px!important;line-height:.95!important;font-weight:1000!important;letter-spacing:-.05em!important;text-transform:uppercase!important;text-shadow:0 2px 18px rgba(255,255,255,.025)!important}
+.bh-loader-title span{display:block!important;margin-top:8px!important}
+.bh-loader-subtitle{margin-top:6px!important;color:#347bff!important;font-family:Inter,system-ui,sans-serif!important;font-size:44px!important;line-height:1!important;font-weight:950!important;letter-spacing:-.03em!important;animation:bhBluePulse 2.2s ease-in-out 1s infinite!important}
+.bh-loader-server{margin-top:16px!important;color:rgba(255,255,255,.48)!important;font-family:Inter,system-ui,sans-serif!important;font-size:13px!important;font-weight:800!important;letter-spacing:.28em!important;text-transform:uppercase!important}
+.bh-loader-line{width:240px!important;height:3px!important;margin:28px auto 0!important;border-radius:999px!important;background:rgba(255,255,255,.10)!important;overflow:hidden!important;animation:bhFadeUp 1.15s .2s ease both!important}
+.bh-loader-line span{display:block!important;width:45%!important;height:100%!important;background:linear-gradient(90deg,transparent,rgba(255,255,255,.95),#347bff,transparent)!important;box-shadow:0 0 12px rgba(52,123,255,.55)!important;animation:bhLineRun 1.25s ease-in-out infinite!important}
+@keyframes bhFadeUp{from{opacity:0;transform:translateY(18px) scale(.985)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes bhShapeFloat{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-5px) scale(1.055)}}
+@keyframes bhOutlineGlow{0%,100%{filter:drop-shadow(0 0 0 rgba(255,255,255,.03))}50%{filter:drop-shadow(0 0 17px rgba(255,255,255,.17))}}
+@keyframes bhLineRun{0%{transform:translateX(-125%)}100%{transform:translateX(320%)}}
+@keyframes bhLoaderAuraPulse{0%,100%{opacity:.55;transform:translate(-50%,-50%) scale(.92)}50%{opacity:1;transform:translate(-50%,-50%) scale(1.08)}}
+@keyframes bhBadgeFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+@keyframes bhBluePulse{0%,100%{text-shadow:0 0 0 rgba(52,123,255,0)}50%{text-shadow:0 0 20px rgba(52,123,255,.28)}}
+@keyframes bhAura{0%,100%{transform:scale(.9);opacity:.55}50%{transform:scale(1.08);opacity:1}}
+
+/* The splash must remain animated even if the main site's low-performance/no-animation mode is enabled. */
+html.user-no-animations .br-site-loader .bh-loader-logo,
+html.user-no-animations .br-site-loader .bh-loader-badge,
+html.user-no-animations .br-site-loader .bh-loader-badge-outline,
+html.user-no-animations .br-site-loader .bh-loader-shape,
+html.user-no-animations .br-site-loader .bh-loader-wordmark,
+html.user-no-animations .br-site-loader .bh-loader-subtitle,
+html.user-no-animations .br-site-loader .bh-loader-line,
+html.user-no-animations .br-site-loader .bh-loader-line span,
+html.user-no-animations .br-site-loader:after,
+html[data-br-device-optimized="1"] .br-site-loader .bh-loader-logo,
+html[data-br-device-optimized="1"] .br-site-loader .bh-loader-badge,
+html[data-br-device-optimized="1"] .br-site-loader .bh-loader-badge-outline,
+html[data-br-device-optimized="1"] .br-site-loader .bh-loader-shape,
+html[data-br-device-optimized="1"] .br-site-loader .bh-loader-wordmark,
+html[data-br-device-optimized="1"] .br-site-loader .bh-loader-subtitle,
+html[data-br-device-optimized="1"] .br-site-loader .bh-loader-line,
+html[data-br-device-optimized="1"] .br-site-loader .bh-loader-line span,
+html[data-br-device-optimized="1"] .br-site-loader:after{animation-play-state:running!important;animation-iteration-count:infinite!important}
+html.user-no-animations .br-site-loader .bh-loader-logo,
+html.user-no-animations .br-site-loader .bh-loader-wordmark,
+html.user-no-animations .br-site-loader .bh-loader-line,
+html[data-br-device-optimized="1"] .br-site-loader .bh-loader-logo,
+html[data-br-device-optimized="1"] .br-site-loader .bh-loader-wordmark,
+html[data-br-device-optimized="1"] .br-site-loader .bh-loader-line{animation-iteration-count:1!important}
+
+@media(max-width:680px){
+  .bh-loader-stage{transform:translateY(-3vh)!important;padding:12px!important}
+  .bh-loader-badge{width:132px!important;height:148px!important}
+  .bh-loader-badge-outline{border-width:6px!important;border-radius:28px 58px 58px 28px / 26px 54px 54px 26px!important}
+  .bh-loader-letter{width:100px!important;height:116px!important;font-size:82px!important;border-radius:20px 44px 44px 20px / 18px 42px 42px 18px!important}
+  .bh-loader-shape.shape-plus{left:43px!important;top:40px!important;transform:scale(.78)}
+  .bh-loader-shape.shape-square{right:31px!important;top:46px!important;transform:scale(.82)}
+  .bh-loader-shape.shape-circle{left:46px!important;bottom:43px!important;transform:scale(.82)}
+  .bh-loader-shape.shape-triangle{right:34px!important;bottom:37px!important;transform:scale(.82)}
+  .bh-loader-wordmark{margin-top:22px!important}
+  .bh-loader-title{font-size:46px!important}
+  .bh-loader-subtitle{font-size:31px!important}
+  .bh-loader-server{font-size:10px!important;letter-spacing:.2em!important;margin-top:14px!important}
+  .bh-loader-line{width:180px!important;margin-top:22px!important}
+}
+@media(max-width:390px){
+  .bh-loader-badge{width:118px!important;height:132px!important}
+  .bh-loader-letter{width:88px!important;height:102px!important}
+  .bh-loader-title{font-size:41px!important}
+  .bh-loader-subtitle{font-size:28px!important}
+  .bh-loader-server{font-size:9px!important;letter-spacing:.16em!important}
+}
+
+/* Keep a light version of the loader motion even when the OS requests reduced motion. */
+@media(prefers-reduced-motion:reduce){
+  .br-site-loader,.br-site-loader *{transition-duration:.25s!important}
+  .br-site-loader .bh-loader-logo{animation:bhFadeUp .5s ease both!important}
+  .br-site-loader .bh-loader-wordmark{animation:bhFadeUp .6s .08s ease both!important}
+  .br-site-loader .bh-loader-badge{animation:bhBadgeFloat 3s ease-in-out .7s infinite!important}
+  .br-site-loader .bh-loader-badge-outline{animation:bhOutlineGlow 2.1s ease-in-out infinite!important}
+  .br-site-loader .bh-loader-shape{animation:bhShapeFloat 2.4s ease-in-out infinite!important}
+  .br-site-loader .bh-loader-subtitle{animation:bhBluePulse 2.5s ease-in-out infinite!important}
+  .br-site-loader .bh-loader-line span{animation:bhLineRun 1.4s ease-in-out infinite!important}
+  .br-site-loader:after{animation:bhAura 3.4s ease-in-out infinite!important}
+}
+
+/* V10: mobile Safari stabilization for the colored logo symbols.
+   Do not animate transform here: iOS WebKit can jitter absolute-positioned
+   elements when scale/translate keyframes compete with the mobile base scale. */
+@keyframes bhShapeMobilePulse{
+  0%,100%{opacity:.88;filter:brightness(.96)}
+  50%{opacity:1;filter:brightness(1.12)}
+}
+@media(max-width:680px){
+  .br-site-loader .bh-loader-shape{
+    animation-name:bhShapeMobilePulse!important;
+    animation-duration:2.2s!important;
+    animation-timing-function:ease-in-out!important;
+    animation-iteration-count:infinite!important;
+    will-change:opacity,filter!important;
+    -webkit-backface-visibility:hidden!important;
+    backface-visibility:hidden!important;
+    transform-origin:center center!important;
+  }
+  .br-site-loader .bh-loader-shape.shape-plus{transform:translateZ(0) scale(.78)!important}
+  .br-site-loader .bh-loader-shape.shape-square{transform:translateZ(0) scale(.82)!important}
+  .br-site-loader .bh-loader-shape.shape-circle{transform:translateZ(0) scale(.82)!important}
+  .br-site-loader .bh-loader-shape.shape-triangle{transform:translateZ(0) scale(.82)!important}
+}
+
+
+/* V11: iPhone/WebKit hard stabilization. Colored symbols stay fixed to avoid jitter. */
+@media(max-width:680px){
+  .br-site-loader .bh-loader-badge{
+    animation:none!important;
+    transform:translateZ(0)!important;
+    -webkit-transform:translateZ(0)!important;
+    will-change:auto!important;
+  }
+  .br-site-loader .bh-loader-shape{
+    animation:bhShapeMobileOpacity 2.4s ease-in-out infinite!important;
+    filter:none!important;
+    will-change:opacity!important;
+    -webkit-font-smoothing:antialiased!important;
+    -webkit-backface-visibility:hidden!important;
+    backface-visibility:hidden!important;
+  }
+  .br-site-loader .bh-loader-shape.shape-plus{transform:scale(.78)!important;-webkit-transform:scale(.78)!important}
+  .br-site-loader .bh-loader-shape.shape-square{transform:scale(.82)!important;-webkit-transform:scale(.82)!important}
+  .br-site-loader .bh-loader-shape.shape-circle{transform:scale(.82)!important;-webkit-transform:scale(.82)!important}
+  .br-site-loader .bh-loader-shape.shape-triangle{transform:scale(.82)!important;-webkit-transform:scale(.82)!important}
+}
+@keyframes bhShapeMobileOpacity{
+  0%,100%{opacity:.92}
+  50%{opacity:1}
+}
+@media(max-width:680px) and (prefers-reduced-motion:reduce){
+  .br-site-loader .bh-loader-badge{animation:none!important}
+  .br-site-loader .bh-loader-shape{animation:bhShapeMobileOpacity 2.4s ease-in-out infinite!important;filter:none!important}
+}

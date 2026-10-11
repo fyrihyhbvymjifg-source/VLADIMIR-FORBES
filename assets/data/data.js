@@ -1,0 +1,43 @@
+window.BR_PLAYERS = [
+  {nick:'Aleks_sber', name:'Саша Горланов', vk:'https://vk.ru/id751320789'},
+  {nick:'Alisher_Xamsters', name:'Alisher Xamster', vk:'https://vk.ru/alisher_xamster'},
+  {nick:'Andrey_Fox', name:'Андрей Фокс', vk:'https://vk.ru/id698900618'},
+  {nick:'Andrey_Nebro', name:'Andrei Aleksandrovichi', vk:'https://vk.ru/id357133578'},
+  {nick:'Angel_Ld', name:'Angel Ld', vk:'https://vk.ru/id1129568869'},
+  {nick:'Ares_Steelhex', name:'Матвей Силантьев', vk:'https://vk.ru/mvs1803'},
+  {nick:'Calypso_Person', name:'Danil Leonidovich', vk:'https://vk.ru/ha1333ha'},
+  {nick:'Danix_Chase', name:'Даникс Стриклер', vk:'https://vk.ru/danixec'},
+  {nick:'Dizni_Xamster', name:'Dizni Xamster', vk:'https://vk.ru/dizni_lev'},
+  {nick:'Donatello_Deep', name:'Renat Budaykhanov', vk:'https://vk.ru/llllllllllllilllllllllliiiiiilll'},
+  {nick:'Eldar_Bill', name:'Эльдар Бештоев', vk:'https://vk.ru/id828185251'},
+  {nick:'Elita_Wizzart', name:'Иван Владимирович', vk:'https://vk.ru/depytatrobloksa'},
+  {nick:'Evgeniy_Kiselev', name:'Евгений Федотов', vk:'https://vk.ru/id201540258'},
+  {nick:'Guy_Ritchie', name:'Дмитрий Литвинов', vk:'https://vk.ru/litvinov713'},
+  {nick:'Lauren_Degraf', name:'In This Life', vk:'https://vk.ru/laurendegraf'},
+  {nick:'Lyntic_Farm', name:'Сергей Лунтик', vk:'https://vk.ru/lyntik2280'},
+  {nick:'Macan_Ritchie', name:'Roma Ismailov', vk:'https://vk.ru/ismo1llov'},
+  {nick:'Pikmi_Grey', name:'Кирилл Корж', vk:'https://vk.ru/k.korzh6'},
+  {nick:'Ralph_Deep', name:'Rustam Nurakhmaev', vk:'https://vk.ru/nypaxmaev'},
+  {nick:'Sam_NonStop', name:'Sam Nonstop', vk:'https://vk.ru/id1097533736'},
+  {nick:'Sasha_Prince', name:'Sasha Prince', vk:'https://vk.ru/sasha_prince1'},
+  {nick:'Spike_Moskvin', name:'Dmitry Alekseevich', vk:'https://vk.ru/anaconda37'},
+  {nick:'Thomas_Under', name:'Линар Непридумал', vk:'https://vk.ru/linar_00'},
+  {nick:'Tima_Evans', name:'Tima Evans', vk:'https://vk.ru/evans2105'},
+  {nick:'Tommy_Ritchie', name:'Andrey Frolov', vk:'https://vk.ru/solo017'},
+  {nick:'Tuborosho_BeMad', name:'Ahmed Ahmedivich', vk:'https://vk.ru/ikko52'},
+  {nick:'Valeriy_Invest', name:'Валерий Каржеманов', vk:'https://vk.ru/id751215089'},
+  {nick:'Vanya_Foksovich', name:'Иван Авдеенко', vk:'https://vk.ru/id801834267'},
+  {nick:'Vito_Luchiano', name:'Святослав Воложанин', vk:'https://vk.ru/id55026490'},
+  {nick:'Welttime_Hunter', name:'Welttime Hunter', vk:'https://vk.ru/welttime'}
+].map((p, i) => ({...p, id: `base-${i + 1}`, rank: i + 1}));
+
+window.BR_KEYS = {
+  wealth: 'br78_forbes_wealth_v2',
+  history: 'br78_forbes_history_v1',
+  meta: 'br78_forbes_meta_v1',
+  session: 'br78_forbes_admin_session_v1',
+  visitors: 'br78_forbes_visitors_v1',
+  stats: 'br78_forbes_stats_v1',
+  players: 'br78_players_state_v1',
+  deleted: 'br78_deleted_players_v1'
+};
