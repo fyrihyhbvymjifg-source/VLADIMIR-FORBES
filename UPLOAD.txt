@@ -1,0 +1,19 @@
+ЗАГРУЗКА НА GITHUB — БЕЗ ЛИШНЕЙ ВЛОЖЕННОЙ ПАПКИ
+
+Полный архив содержит index.html и assets прямо в корне.
+Не загружай сам ZIP в репозиторий: сначала распакуй его.
+
+Если загружаешь через сайт GitHub, используй отдельные части 01—07:
+1. Распакуй 01-pages.zip. Открой репозиторий VLADIMIR-FORBES → Add file → Upload files.
+   Перетащи ВСЁ содержимое распакованной части, затем Commit changes.
+2. Повтори для 02-styles.zip, затем 03-scripts.zip, 04-data.zip,
+   05-images.zip, 06-config.zip и 07-sources.zip.
+   В частях 02—07 перетаскивай папку assets целиком: она сохраняет нужные пути подпапок.
+   В каждой части меньше 100 файлов.
+3. После загрузки в корне должны быть index.html, admin.html и папка assets.
+   Проверь, что существуют assets/css/site.final.css и assets/js/app.final.js.
+4. Settings → Pages: при публикации из ветки выбери main и / (root), затем Save.
+   Дождись успешной публикации в Actions и обнови страницу Ctrl + F5.
+
+Поддержка: включи Anonymous в Firebase Authentication и опубликуй исправленные правила из firebase-database-rules.json.
+Firebase Rules не влияют на загрузку CSS.

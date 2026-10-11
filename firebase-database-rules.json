@@ -1,0 +1,251 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+    "players": {
+      ".read": true,
+      ".write": "auth != null && (auth.uid == '6EBZp2WqNsaPscVkdPMso1q6uTg1' || (root.child('adminControls').child('staffLockdown').val() != true && root.child('adminUsers').child(auth.uid).child('active').val() == true && root.child('adminUsers').child(auth.uid).child('readOnly').val() != true && (root.child('adminUsers').child(auth.uid).child('permissions').child('players_edit').val() == true || root.child('adminUsers').child(auth.uid).child('permissions').child('players_delete').val() == true)))",
+      ".indexOn": [
+        "id"
+      ]
+    },
+    "deletedPlayers": {
+      ".read": "auth != null && (auth.uid == '6EBZp2WqNsaPscVkdPMso1q6uTg1' || (root.child('adminControls').child('staffLockdown').val() != true && root.child('adminUsers').child(auth.uid).child('active').val() == true))",
+      ".write": "auth != null && (auth.uid == '6EBZp2WqNsaPscVkdPMso1q6uTg1' || (root.child('adminControls').child('staffLockdown').val() != true && root.child('adminUsers').child(auth.uid).child('active').val() == true && root.child('adminUsers').child(auth.uid).child('readOnly').val() != true && root.child('adminUsers').child(auth.uid).child('permissions').child('players_delete').val() == true))"
+    },
+    "history": {
+      ".read": "auth != null && (auth.uid == '6EBZp2WqNsaPscVkdPMso1q6uTg1' || (root.child('adminControls').child('staffLockdown').val() != true && root.child('adminUsers').child(auth.uid).child('active').val() == true))",
+      ".write": "auth != null && (auth.uid == '6EBZp2WqNsaPscVkdPMso1q6uTg1' || (root.child('adminControls').child('staffLockdown').val() != true && root.child('adminUsers').child(auth.uid).child('active').val() == true && root.child('adminUsers').child(auth.uid).child('readOnly').val() != true && (root.child('adminUsers').child(auth.uid).child('permissions').child('players_edit').val() == true || root.child('adminUsers').child(auth.uid).child('permissions').child('players_delete').val() == true || root.child('adminUsers').child(auth.uid).child('permissions').child('admins').val() == true || root.child('adminUsers').child(auth.uid).child('permissions').child('leaders').val() == true || root.child('adminUsers').child(auth.uid).child('permissions').child('settings').val() == true || root.child('adminUsers').child(auth.uid).child('permissions').child('events').val() == true || root.child('adminUsers').child(auth.uid).child('permissions').child('access_manage').val() == true)))"
+    },
+    "settings": {
+      ".read": true,
+      ".write": "auth != null && (auth.uid == '6EBZp2WqNsaPscVkdPMso1q6uTg1' || (root.child('adminControls').child('staffLockdown').val() != true && root.child('adminUsers').child(auth.uid).child('active').val() == true && root.child('adminUsers').child(auth.uid).child('readOnly').val() != true && (root.child('adminUsers').child(auth.uid).child('permissions').child('settings').val() == true || root.child('adminUsers').child(auth.uid).child('permissions').child('events').val() == true || root.child('adminUsers').child(auth.uid).child('permissions').child('admins').val() == true || root.child('adminUsers').child(auth.uid).child('permissions').child('leaders').val() == true)))"
+    },
+    "adminUsers": {
+      ".read": "auth != null && (auth.uid == '6EBZp2WqNsaPscVkdPMso1q6uTg1' || (root.child('adminControls').child('staffLockdown').val() != true && root.child('adminUsers').child(auth.uid).child('active').val() == true && root.child('adminUsers').child(auth.uid).child('permissions').child('access_manage').val() == true))",
+      "$uid": {
+        ".read": "auth != null && (auth.uid == '6EBZp2WqNsaPscVkdPMso1q6uTg1' || (root.child('adminControls').child('staffLockdown').val() != true && (auth.uid == $uid || (root.child('adminUsers').child(auth.uid).child('active').val() == true && root.child('adminUsers').child(auth.uid).child('permissions').child('access_manage').val() == true))))",
+        ".write": "auth != null && (auth.uid == '6EBZp2WqNsaPscVkdPMso1q6uTg1' || (root.child('adminControls').child('staffLockdown').val() != true && root.child('adminUsers').child(auth.uid).child('active').val() == true && root.child('adminUsers').child(auth.uid).child('readOnly').val() != true && root.child('adminUsers').child(auth.uid).child('permissions').child('access_manage').val() == true))"
+      }
+    },
+    "adminControls": {
+      "errorCenterEnabled": {
+        ".read": true,
+        ".write": "auth != null && auth.uid == '6EBZp2WqNsaPscVkdPMso1q6uTg1'",
+        ".validate": "newData.isBoolean()"
+      },
+      "staffLockdown": {
+        ".read": "auth != null",
+        ".write": "auth != null && auth.uid == '6EBZp2WqNsaPscVkdPMso1q6uTg1'",
+        ".validate": "newData.isBoolean()"
+      },
+      "errorCleanupBefore": {
+        ".read": true,
+        ".write": "auth != null && auth.uid == '6EBZp2WqNsaPscVkdPMso1q6uTg1'",
+        ".validate": "newData.isNumber()"
+      }
+    },
+    "stats": {
+      ".read": "auth != null && (auth.uid == '6EBZp2WqNsaPscVkdPMso1q6uTg1' || (root.child('adminControls').child('staffLockdown').val() != true && root.child('adminUsers').child(auth.uid).child('active').val() == true && root.child('adminUsers').child(auth.uid).child('permissions').child('stats').val() == true))",
+      ".write": "auth != null && auth.uid == '6EBZp2WqNsaPscVkdPMso1q6uTg1'",
+      "visits": {
+        "$visitId": {
+          ".write": "!data.exists() && newData.hasChildren(['ts','day','device','visitorId','sessionId'])",
+          ".validate": "newData.child('ts').isNumber() && newData.child('day').isString() && newData.child('device').isString() && newData.child('visitorId').isString() && newData.child('sessionId').isString()"
+        }
+      },
+      "presence": {
+        "$sessionId": {
+          ".write": true,
+          ".validate": "!newData.exists() || (newData.hasChildren(['visitorId','device','lastSeen']) && newData.child('visitorId').isString() && newData.child('device').isString() && newData.child('lastSeen').isNumber())"
+        }
+      }
+    },
+    "adminLoginLogs": {
+      ".read": "auth != null && (auth.uid == '6EBZp2WqNsaPscVkdPMso1q6uTg1' || (root.child('adminControls').child('staffLockdown').val() != true && root.child('adminUsers').child(auth.uid).child('active').val() == true && root.child('adminUsers').child(auth.uid).child('permissions').child('access_manage').val() == true))",
+      ".write": "auth != null && (auth.uid == '6EBZp2WqNsaPscVkdPMso1q6uTg1' || (root.child('adminControls').child('staffLockdown').val() != true && root.child('adminUsers').child(auth.uid).child('active').val() == true && root.child('adminUsers').child(auth.uid).child('readOnly').val() != true && root.child('adminUsers').child(auth.uid).child('permissions').child('access_manage').val() == true))",
+      ".indexOn": [
+        "at"
+      ],
+      "$logId": {
+        ".write": "auth != null && (auth.uid == '6EBZp2WqNsaPscVkdPMso1q6uTg1' || (root.child('adminControls').child('staffLockdown').val() != true && ((root.child('adminUsers').child(auth.uid).child('active').val() == true && root.child('adminUsers').child(auth.uid).child('readOnly').val() != true && root.child('adminUsers').child(auth.uid).child('permissions').child('access_manage').val() == true) || (!data.exists() && newData.exists() && newData.child('uid').val() == auth.uid && root.child('adminUsers').child(auth.uid).child('active').val() == true))))",
+        ".validate": "!newData.exists() || (newData.hasChildren(['uid','alias','role','status','at']) && newData.child('uid').isString() && newData.child('alias').isString() && newData.child('role').isString() && newData.child('status').isString() && newData.child('at').isNumber())"
+      }
+    },
+    "staffActivity": {
+      ".read": "auth != null && (auth.uid == '6EBZp2WqNsaPscVkdPMso1q6uTg1' || (root.child('adminControls').child('staffLockdown').val() != true && root.child('adminUsers').child(auth.uid).child('active').val() == true && root.child('adminUsers').child(auth.uid).child('permissions').child('access_manage').val() == true))",
+      "$uid": {
+        ".write": "auth != null && (auth.uid == '6EBZp2WqNsaPscVkdPMso1q6uTg1' || (auth.uid == $uid && root.child('adminControls').child('staffLockdown').val() != true && root.child('adminUsers').child(auth.uid).child('active').val() == true))",
+        ".validate": "!newData.exists() || (newData.child('lastLoginAt').isNumber() && newData.child('alias').isString() && newData.child('role').isString())"
+      }
+    },
+    "staffDirectory": {
+      ".read": "auth != null && (auth.uid == '6EBZp2WqNsaPscVkdPMso1q6uTg1' || (root.child('adminControls').child('staffLockdown').val() != true && root.child('adminUsers').child(auth.uid).child('active').val() == true && root.child('adminUsers').child(auth.uid).child('permissions').child('access_manage').val() == true))",
+      "$key": {
+        ".write": "auth != null && (auth.uid == '6EBZp2WqNsaPscVkdPMso1q6uTg1' || (root.child('adminControls').child('staffLockdown').val() != true && root.child('adminUsers').child(auth.uid).child('active').val() == true && root.child('adminUsers').child(auth.uid).child('readOnly').val() != true && root.child('adminUsers').child(auth.uid).child('permissions').child('access_manage').val() == true))"
+      }
+    },
+    "adminChat": {
+      ".read": "auth != null && (auth.uid == '6EBZp2WqNsaPscVkdPMso1q6uTg1' || (root.child('adminControls').child('staffLockdown').val() != true && root.child('adminUsers').child(auth.uid).child('active').val() == true && root.child('adminUsers').child(auth.uid).child('permissions').child('chat').val() == true))",
+      ".write": "auth != null && auth.uid == '6EBZp2WqNsaPscVkdPMso1q6uTg1'",
+      ".indexOn": [
+        "at"
+      ],
+      "$messageId": {
+        ".write": "auth != null && (auth.uid == '6EBZp2WqNsaPscVkdPMso1q6uTg1' || (root.child('adminControls').child('staffLockdown').val() != true && root.child('adminUsers').child(auth.uid).child('active').val() == true && root.child('adminUsers').child(auth.uid).child('permissions').child('chat').val() == true && !data.exists() && newData.exists() && newData.child('uid').val() == auth.uid))",
+        ".validate": "!newData.exists() || (newData.hasChildren(['uid','alias','role','text','at']) && newData.child('uid').isString() && newData.child('alias').isString() && newData.child('role').isString() && newData.child('text').isString() && newData.child('at').isNumber())"
+      }
+    },
+    "adminChatPinned": {
+      ".read": "auth != null && (auth.uid == '6EBZp2WqNsaPscVkdPMso1q6uTg1' || (root.child('adminControls').child('staffLockdown').val() != true && root.child('adminUsers').child(auth.uid).child('active').val() == true && root.child('adminUsers').child(auth.uid).child('permissions').child('chat').val() == true))",
+      ".write": "auth != null && (auth.uid == '6EBZp2WqNsaPscVkdPMso1q6uTg1' || (root.child('adminControls').child('staffLockdown').val() != true && root.child('adminUsers').child(auth.uid).child('active').val() == true && root.child('adminUsers').child(auth.uid).child('readOnly').val() != true && root.child('adminUsers').child(auth.uid).child('permissions').child('chat').val() == true && root.child('adminUsers').child(auth.uid).child('permissions').child('admins').val() == true && root.child('adminUsers').child(auth.uid).child('permissions').child('leaders').val() == true))",
+      ".validate": "!newData.exists() || (newData.hasChildren(['text','uid','alias','role','pinnedAt']) && newData.child('text').isString() && newData.child('uid').isString() && newData.child('alias').isString() && newData.child('role').isString() && newData.child('pinnedAt').isNumber())"
+    },
+    "adminChatPresence": {
+      ".read": "auth != null && (auth.uid == '6EBZp2WqNsaPscVkdPMso1q6uTg1' || (root.child('adminControls').child('staffLockdown').val() != true && root.child('adminUsers').child(auth.uid).child('active').val() == true))",
+      "$uid": {
+        ".write": "auth != null && (auth.uid == '6EBZp2WqNsaPscVkdPMso1q6uTg1' || (auth.uid == $uid && root.child('adminControls').child('staffLockdown').val() != true && root.child('adminUsers').child(auth.uid).child('active').val() == true))",
+        ".validate": "!newData.exists() || (newData.hasChildren(['uid','alias','role','state','lastSeen','activityAt']) && newData.child('uid').val() == $uid && newData.child('alias').isString() && newData.child('role').isString() && newData.child('state').isString() && (newData.child('state').val() == 'online' || newData.child('state').val() == 'away' || newData.child('state').val() == 'offline') && newData.child('lastSeen').isNumber() && newData.child('activityAt').isNumber())"
+      }
+    },
+    "forbesService": {
+      "accounts": {
+        ".read": "auth != null && (auth.uid == '6EBZp2WqNsaPscVkdPMso1q6uTg1' || root.child('adminUsers').child(auth.uid).child('active').val() == true)",
+        "counter": {
+          ".read": "auth != null",
+          ".write": "auth != null",
+          ".validate": "newData.isNumber() && ((!data.exists() && newData.val() == 1) || (data.exists() && newData.val() == data.val() + 1))"
+        },
+        "users": {
+          "$uid": {
+            ".read": "auth != null && (auth.uid == $uid || (auth.uid == '6EBZp2WqNsaPscVkdPMso1q6uTg1' || root.child('adminUsers').child(auth.uid).child('active').val() == true))",
+            ".write": "auth != null && ( (auth.uid == $uid && ( (!data.exists() && !newData.child('linkedPlayerId').exists()) || (data.exists() && newData.child('id').val() == data.child('id').val() && (!data.child('linkedPlayerId').exists() || newData.child('linkedPlayerId').val() == data.child('linkedPlayerId').val())) )) || (auth.uid == '6EBZp2WqNsaPscVkdPMso1q6uTg1' || (root.child('adminControls').child('staffLockdown').val() != true && root.child('adminUsers').child(auth.uid).child('active').val() == true && root.child('adminUsers').child(auth.uid).child('readOnly').val() != true && root.child('adminUsers').child(auth.uid).child('permissions').child('players_edit').val() == true)) )",
+            ".validate": "newData.hasChildren(['id','nickname','createdAt']) && newData.child('id').isNumber() && newData.child('nickname').isString() && newData.child('createdAt').isNumber() && (!newData.child('linkedPlayerId').exists() || newData.child('linkedPlayerId').isString()) && (!newData.child('linkedAt').exists() || newData.child('linkedAt').isNumber())"
+          }
+        }
+      },
+      "applications": {
+        ".read": "auth != null && (auth.uid == '6EBZp2WqNsaPscVkdPMso1q6uTg1' || root.child('adminUsers').child(auth.uid).child('active').val() == true)",
+        "$uid": {
+          ".read": "auth != null && (auth.uid == $uid || auth.uid == '6EBZp2WqNsaPscVkdPMso1q6uTg1' || root.child('adminUsers').child(auth.uid).child('active').val() == true)",
+          ".write": "auth != null && (auth.uid == $uid || auth.uid == '6EBZp2WqNsaPscVkdPMso1q6uTg1' || root.child('adminUsers').child(auth.uid).child('active').val() == true)",
+          ".validate": "newData.hasChildren(['uid','accountId','nickname','money','businesses','transport','proof','status','createdAt']) && newData.child('uid').val() == $uid && newData.child('status').isString()"
+        }
+      },
+      "notifications": {
+        "$uid": {
+          ".read": "auth != null && (auth.uid == $uid || auth.uid == '6EBZp2WqNsaPscVkdPMso1q6uTg1' || root.child('adminUsers').child(auth.uid).child('active').val() == true)",
+          "$id": {
+            ".write": "auth != null && (auth.uid == $uid || auth.uid == '6EBZp2WqNsaPscVkdPMso1q6uTg1' || root.child('adminUsers').child(auth.uid).child('active').val() == true)"
+          }
+        }
+      },
+      "linkRequests": {
+        ".read": "auth != null && (auth.uid == '6EBZp2WqNsaPscVkdPMso1q6uTg1' || root.child('adminUsers').child(auth.uid).child('active').val() == true)",
+        "$uid": {
+          ".read": "auth != null && (auth.uid == $uid || (auth.uid == '6EBZp2WqNsaPscVkdPMso1q6uTg1' || root.child('adminUsers').child(auth.uid).child('active').val() == true))",
+          ".write": "auth != null && ((auth.uid == $uid && data.child('status').val() != 'approved') || (auth.uid == '6EBZp2WqNsaPscVkdPMso1q6uTg1' || (root.child('adminControls').child('staffLockdown').val() != true && root.child('adminUsers').child(auth.uid).child('active').val() == true && root.child('adminUsers').child(auth.uid).child('readOnly').val() != true && root.child('adminUsers').child(auth.uid).child('permissions').child('players_edit').val() == true)))",
+          ".validate": "!newData.exists() || ( newData.hasChildren(['uid','nickname','playerId','playerNick','playerRank','status','createdAt']) && newData.child('uid').val() == $uid && newData.child('nickname').isString() && newData.child('playerId').isString() && newData.child('playerNick').isString() && newData.child('playerRank').isNumber() && newData.child('status').isString() && newData.child('createdAt').isNumber() && ((auth.uid == '6EBZp2WqNsaPscVkdPMso1q6uTg1' || (root.child('adminControls').child('staffLockdown').val() != true && root.child('adminUsers').child(auth.uid).child('active').val() == true && root.child('adminUsers').child(auth.uid).child('readOnly').val() != true && root.child('adminUsers').child(auth.uid).child('permissions').child('players_edit').val() == true)) || (auth.uid == $uid && newData.child('status').val() == 'pending' && !newData.child('reviewedAt').exists() && !newData.child('reviewedBy').exists() && !newData.child('accountId').exists() && !newData.child('note').exists())) )"
+        }
+      },
+      "playerLinks": {
+        ".read": "auth != null && (auth.uid == '6EBZp2WqNsaPscVkdPMso1q6uTg1' || root.child('adminUsers').child(auth.uid).child('active').val() == true)",
+        "$playerKey": {
+          ".write": "auth != null && (auth.uid == '6EBZp2WqNsaPscVkdPMso1q6uTg1' || (root.child('adminControls').child('staffLockdown').val() != true && root.child('adminUsers').child(auth.uid).child('active').val() == true && root.child('adminUsers').child(auth.uid).child('readOnly').val() != true && root.child('adminUsers').child(auth.uid).child('permissions').child('players_edit').val() == true))",
+          ".validate": "!newData.exists() || (newData.hasChildren(['uid','playerId','nickname','linkedAt']) && newData.child('uid').isString() && newData.child('playerId').isString() && newData.child('nickname').isString() && newData.child('linkedAt').isNumber())"
+        }
+      }
+    },
+    "adminReadState": {
+      "$uid": {
+        ".read": "auth != null && auth.uid == $uid && (auth.uid == '6EBZp2WqNsaPscVkdPMso1q6uTg1' || (root.child('adminControls').child('staffLockdown').val() != true && root.child('adminUsers').child(auth.uid).child('active').val() == true && root.child('adminUsers').child(auth.uid).child('permissions').child('chat').val() == true))",
+        ".write": "auth != null && auth.uid == $uid && (auth.uid == '6EBZp2WqNsaPscVkdPMso1q6uTg1' || (root.child('adminControls').child('staffLockdown').val() != true && root.child('adminUsers').child(auth.uid).child('active').val() == true && root.child('adminUsers').child(auth.uid).child('permissions').child('chat').val() == true))",
+        "chatLastReadAt": {
+          ".validate": "newData.isNumber()"
+        }
+      }
+    },
+    "communityChat": {
+      "messages": {
+        ".read": "auth != null && ((auth != null && root.child('forbesService').child('accounts').child('users').child(auth.uid).child('linkedPlayerId').exists()) || (auth != null && (auth.uid == '6EBZp2WqNsaPscVkdPMso1q6uTg1' || (root.child('adminControls').child('staffLockdown').val() != true && root.child('adminUsers').child(auth.uid).child('active').val() == true && root.child('adminUsers').child(auth.uid).child('permissions').child('community_chat').val() == true))))",
+        ".indexOn": [
+          "at"
+        ],
+        "$messageId": {
+          ".write": "(auth != null && (auth.uid == '6EBZp2WqNsaPscVkdPMso1q6uTg1' || (root.child('adminControls').child('staffLockdown').val() != true && root.child('adminUsers').child(auth.uid).child('active').val() == true && root.child('adminUsers').child(auth.uid).child('readOnly').val() != true && root.child('adminUsers').child(auth.uid).child('permissions').child('community_chat').val() == true))) || ((root.child('settings/emergency/chatClosed').val() != true && auth != null && root.child('forbesService').child('accounts').child('users').child(auth.uid).child('linkedPlayerId').exists()) && (!root.child('communityChat').child('bans').child(auth.uid).exists() && (!root.child('communityChat').child('mutes').child(auth.uid).exists() || root.child('communityChat').child('mutes').child(auth.uid).child('until').val() <= now)) && ((!data.exists() && newData.exists() && newData.child('uid').val() == auth.uid && newData.child('playerId').val() == root.child('forbesService').child('accounts').child('users').child(auth.uid).child('linkedPlayerId').val() && newData.child('nick').val() == root.child('forbesService').child('accounts').child('users').child(auth.uid).child('nickname').val()) || (data.exists() && !newData.exists() && data.child('uid').val() == auth.uid)))",
+          ".validate": "!newData.exists() || (newData.hasChildren(['uid','playerId','nick','text','at']) && newData.child('uid').isString() && newData.child('playerId').isString() && newData.child('nick').isString() && newData.child('text').isString() && newData.child('text').val().length > 0 && newData.child('text').val().length <= 700 && newData.child('at').isNumber() && (!newData.child('reply').exists() || (newData.child('reply').hasChildren(['id','nick','text']) && newData.child('reply').child('id').isString() && newData.child('reply').child('nick').isString() && newData.child('reply').child('text').isString())))"
+        },
+        ".write": "auth != null && (auth.uid == '6EBZp2WqNsaPscVkdPMso1q6uTg1' || (root.child('adminControls').child('staffLockdown').val() != true && root.child('adminUsers').child(auth.uid).child('active').val() == true && root.child('adminUsers').child(auth.uid).child('readOnly').val() != true && root.child('adminUsers').child(auth.uid).child('permissions').child('community_chat').val() == true))"
+      },
+      "presence": {
+        ".read": "auth != null && ((auth != null && root.child('forbesService').child('accounts').child('users').child(auth.uid).child('linkedPlayerId').exists()) || (auth != null && (auth.uid == '6EBZp2WqNsaPscVkdPMso1q6uTg1' || (root.child('adminControls').child('staffLockdown').val() != true && root.child('adminUsers').child(auth.uid).child('active').val() == true && root.child('adminUsers').child(auth.uid).child('permissions').child('community_chat').val() == true))))",
+        "$uid": {
+          ".write": "auth != null && auth.uid == $uid && root.child('forbesService').child('accounts').child('users').child(auth.uid).child('linkedPlayerId').exists()",
+          ".validate": "!newData.exists() || (newData.hasChildren(['uid','playerId','nick','lastSeen']) && newData.child('uid').val() == $uid && newData.child('playerId').val() == root.child('forbesService').child('accounts').child('users').child(auth.uid).child('linkedPlayerId').val() && newData.child('nick').isString() && newData.child('lastSeen').isNumber())"
+        }
+      },
+      "mutes": {
+        "$uid": {
+          ".read": "auth != null && (auth.uid == $uid || (auth != null && (auth.uid == '6EBZp2WqNsaPscVkdPMso1q6uTg1' || (root.child('adminControls').child('staffLockdown').val() != true && root.child('adminUsers').child(auth.uid).child('active').val() == true && root.child('adminUsers').child(auth.uid).child('permissions').child('community_chat').val() == true))))",
+          ".write": "auth != null && (auth.uid == '6EBZp2WqNsaPscVkdPMso1q6uTg1' || (root.child('adminControls').child('staffLockdown').val() != true && root.child('adminUsers').child(auth.uid).child('active').val() == true && root.child('adminUsers').child(auth.uid).child('readOnly').val() != true && root.child('adminUsers').child(auth.uid).child('permissions').child('community_chat').val() == true))",
+          ".validate": "!newData.exists() || (newData.hasChildren(['until','by','at']) && newData.child('until').isNumber() && newData.child('by').isString() && newData.child('at').isNumber())"
+        }
+      },
+      "bans": {
+        "$uid": {
+          ".read": "auth != null && (auth.uid == $uid || (auth != null && (auth.uid == '6EBZp2WqNsaPscVkdPMso1q6uTg1' || (root.child('adminControls').child('staffLockdown').val() != true && root.child('adminUsers').child(auth.uid).child('active').val() == true && root.child('adminUsers').child(auth.uid).child('permissions').child('community_chat').val() == true))))",
+          ".write": "auth != null && (auth.uid == '6EBZp2WqNsaPscVkdPMso1q6uTg1' || (root.child('adminControls').child('staffLockdown').val() != true && root.child('adminUsers').child(auth.uid).child('active').val() == true && root.child('adminUsers').child(auth.uid).child('readOnly').val() != true && root.child('adminUsers').child(auth.uid).child('permissions').child('community_chat').val() == true))",
+          ".validate": "!newData.exists() || (newData.hasChildren(['by','at']) && newData.child('by').isString() && newData.child('at').isNumber())"
+        },
+        ".read": "auth != null && (auth.uid == '6EBZp2WqNsaPscVkdPMso1q6uTg1' || (root.child('adminControls/staffLockdown').val() != true && root.child('adminUsers').child(auth.uid).child('active').val() == true && root.child('adminUsers').child(auth.uid).child('permissions/community_chat').val() == true))"
+      }
+    },
+    "supportTickets": {
+      ".read": "auth != null && (auth.uid == '6EBZp2WqNsaPscVkdPMso1q6uTg1' || (root.child('adminControls').child('staffLockdown').val() != true && root.child('adminUsers').child(auth.uid).child('active').val() == true && root.child('adminUsers').child(auth.uid).child('permissions').child('support').val() == true))",
+      "$uid": {
+        ".read": "auth != null && (auth.uid == $uid || (auth != null && (auth.uid == '6EBZp2WqNsaPscVkdPMso1q6uTg1' || (root.child('adminControls').child('staffLockdown').val() != true && root.child('adminUsers').child(auth.uid).child('active').val() == true && root.child('adminUsers').child(auth.uid).child('permissions').child('support').val() == true))))",
+        "$ticketId": {
+          "meta": {
+            ".write": "(auth != null && (auth.uid == '6EBZp2WqNsaPscVkdPMso1q6uTg1' || (root.child('adminControls/staffLockdown').val() != true && root.child('adminUsers').child(auth.uid).child('active').val() == true && root.child('adminUsers').child(auth.uid).child('readOnly').val() != true && root.child('adminUsers').child(auth.uid).child('permissions/support').val() == true)))",
+            ".validate": "!newData.exists() || (newData.hasChildren(['uid','ticketId','nickname','accountId','subject','status','createdAt','adminReadAt']) && newData.child('uid').val() == $uid && newData.child('ticketId').val() == $ticketId && newData.child('nickname').isString() && newData.child('accountId').isNumber() && newData.child('subject').isString() && newData.child('subject').val().length > 0 && newData.child('subject').val().length <= 90 && newData.child('status').isString() && (newData.child('status').val() == 'new' || newData.child('status').val() == 'in_progress' || newData.child('status').val() == 'closed' || newData.child('status').val() == 'resolved') && newData.child('createdAt').isNumber() && newData.child('adminReadAt').isNumber()) && (!newData.exists() || (newData.child('nickname').val().length > 0 && newData.child('nickname').val().length <= 64 && (!newData.child('contact').exists() || (newData.child('contact').isString() && newData.child('contact').val().length <= 160)) && (!newData.child('category').exists() || (newData.child('category').val() == 'question' || newData.child('category').val() == 'forbes' || newData.child('category').val() == 'bug' || newData.child('category').val() == 'idea' || newData.child('category').val() == 'other')) && (!newData.child('guest').exists() || newData.child('guest').isBoolean()))) && ((auth != null && (auth.uid == '6EBZp2WqNsaPscVkdPMso1q6uTg1' || (root.child('adminControls/staffLockdown').val() != true && root.child('adminUsers').child(auth.uid).child('active').val() == true && root.child('adminUsers').child(auth.uid).child('readOnly').val() != true && root.child('adminUsers').child(auth.uid).child('permissions/support').val() == true))) || (newData.child('guest').val() == (auth.token.firebase.sign_in_provider == 'anonymous') && (newData.child('accountId').val() == 0 || newData.child('accountId').val() == root.child('forbesService/accounts/users').child(auth.uid).child('id').val()) && (newData.child('linkedPlayerId').val() == '' || newData.child('linkedPlayerId').val() == root.child('forbesService/accounts/users').child(auth.uid).child('linkedPlayerId').val())))"
+          },
+          "messages": {
+            ".read": "auth != null && (auth.uid == $uid || (auth != null && (auth.uid == '6EBZp2WqNsaPscVkdPMso1q6uTg1' || (root.child('adminControls').child('staffLockdown').val() != true && root.child('adminUsers').child(auth.uid).child('active').val() == true && root.child('adminUsers').child(auth.uid).child('permissions').child('support').val() == true))))",
+            ".indexOn": [
+              "at"
+            ],
+            "$messageId": {
+              ".write": "(auth != null && (auth.uid == '6EBZp2WqNsaPscVkdPMso1q6uTg1' || (root.child('adminControls/staffLockdown').val() != true && root.child('adminUsers').child(auth.uid).child('active').val() == true && root.child('adminUsers').child(auth.uid).child('readOnly').val() != true && root.child('adminUsers').child(auth.uid).child('permissions/support').val() == true))) || ((auth != null && auth.uid == $uid) && !data.exists() && newData.exists() && root.child('supportTickets').child($uid).child($ticketId).child('meta').exists() && root.child('supportTickets').child($uid).child($ticketId).child('meta/status').val() != 'closed' && root.child('supportTickets').child($uid).child($ticketId).child('meta/status').val() != 'resolved')",
+              ".validate": "!newData.exists() || (newData.hasChildren(['uid','author','role','text','at']) && newData.child('uid').isString() && newData.child('author').isString() && newData.child('role').isString() && (newData.child('role').val() == 'user' || newData.child('role').val() == 'admin') && newData.child('text').isString() && newData.child('text').val().length > 0 && newData.child('text').val().length <= 1500 && newData.child('at').isNumber()) && ((auth != null && (auth.uid == '6EBZp2WqNsaPscVkdPMso1q6uTg1' || (root.child('adminControls/staffLockdown').val() != true && root.child('adminUsers').child(auth.uid).child('active').val() == true && root.child('adminUsers').child(auth.uid).child('readOnly').val() != true && root.child('adminUsers').child(auth.uid).child('permissions/support').val() == true))) || (newData.exists() && newData.child('uid').val() == auth.uid && newData.child('role').val() == 'user' && newData.child('author').val() == newData.parent().parent().child('meta/nickname').val()))"
+            }
+          },
+          ".write": "(auth != null && (auth.uid == '6EBZp2WqNsaPscVkdPMso1q6uTg1' || (root.child('adminControls/staffLockdown').val() != true && root.child('adminUsers').child(auth.uid).child('active').val() == true && root.child('adminUsers').child(auth.uid).child('readOnly').val() != true && root.child('adminUsers').child(auth.uid).child('permissions/support').val() == true))) || ((auth != null && auth.uid == $uid) && !data.exists() && newData.exists() && newData.hasChildren(['meta','messages']) && newData.child('messages').hasChildren() && newData.child('meta/uid').val() == $uid && newData.child('meta/ticketId').val() == $ticketId && newData.child('meta/status').val() == 'new' && newData.child('meta/adminReadAt').val() == 0 && newData.child('meta/assignedUid').val() == '' && newData.child('meta/assignedName').val() == '' && !newData.child('meta/closedAt').exists() && !newData.child('meta/resolvedAt').exists())",
+          ".validate": "!newData.exists() || newData.hasChildren(['meta','messages'])"
+        }
+      }
+    },
+    "forbesRequests": {
+      ".read": "auth != null && (auth.uid == '6EBZp2WqNsaPscVkdPMso1q6uTg1' || (root.child('adminControls').child('staffLockdown').val() != true && root.child('adminUsers').child(auth.uid).child('active').val() == true && (root.child('adminUsers').child(auth.uid).child('permissions').child('forbes_requests').val() == true || root.child('adminUsers').child(auth.uid).child('permissions').child('forbes_global').val() == true)))",
+      ".indexOn": [
+        "createdAt",
+        "status",
+        "server"
+      ],
+      "$requestId": {
+        ".write": "(auth != null && (auth.uid == '6EBZp2WqNsaPscVkdPMso1q6uTg1' || (root.child('adminControls').child('staffLockdown').val() != true && root.child('adminUsers').child(auth.uid).child('active').val() == true && root.child('adminUsers').child(auth.uid).child('readOnly').val() != true && (root.child('adminUsers').child(auth.uid).child('permissions').child('forbes_requests').val() == true || root.child('adminUsers').child(auth.uid).child('permissions').child('forbes_global').val() == true)))) || (root.child('settings/emergency/requestsClosed').val() != true && !data.exists() && newData.exists() && newData.child('requestId').val() == $requestId && newData.child('scope').val() == 'global' && newData.child('type').val() == 'join' && newData.child('status').val() == 'pending' && newData.child('source').val() == 'global-forbes' && !newData.child('reviewedAt').exists() && !newData.child('reviewNote').exists())",
+        ".validate": "!newData.exists() || (newData.hasChildren(['scope','type','requestId','nickname','server','status','createdAt','source']) && newData.child('scope').val() == 'global' && newData.child('type').val() == 'join' && newData.child('requestId').isString() && newData.child('requestId').val() == $requestId && newData.child('nickname').isString() && newData.child('nickname').val().length > 0 && newData.child('nickname').val().length <= 40 && newData.child('server').isString() && newData.child('server').val().length > 0 && newData.child('server').val().length <= 6 && newData.child('status').isString() && (newData.child('status').val() == 'pending' || newData.child('status').val() == 'approved' || newData.child('status').val() == 'rejected') && newData.child('createdAt').isNumber() && newData.child('source').val() == 'global-forbes' && (!newData.child('name').exists() || (newData.child('name').isString() && newData.child('name').val().length <= 80)) && (!newData.child('vk').exists() || (newData.child('vk').isString() && newData.child('vk').val().length <= 300)) && (!newData.child('proofUrl').exists() || (newData.child('proofUrl').isString() && newData.child('proofUrl').val().length <= 1000)) && (!newData.child('proofImage').exists() || (newData.child('proofImage').isString() && newData.child('proofImage').val().length <= 1200000)) && ((newData.child('proofUrl').isString() && newData.child('proofUrl').val().length > 0) || (newData.child('proofImage').isString() && newData.child('proofImage').val().length > 0)) && (!newData.child('comment').exists() || (newData.child('comment').isString() && newData.child('comment').val().length <= 500)) && (!newData.child('reviewedAt').exists() || newData.child('reviewedAt').isNumber()) && (!newData.child('reviewNote').exists() || (newData.child('reviewNote').isString() && newData.child('reviewNote').val().length <= 300)))"
+      }
+    },
+    "forbesEvents": {
+      ".read": true,
+      ".indexOn": [
+        "at"
+      ],
+      ".write": "auth != null && (auth.uid == '6EBZp2WqNsaPscVkdPMso1q6uTg1' || (root.child('adminControls').child('staffLockdown').val() != true && root.child('adminUsers').child(auth.uid).child('active').val() == true && root.child('adminUsers').child(auth.uid).child('readOnly').val() != true && root.child('adminUsers').child(auth.uid).child('permissions').child('cleanup').val() == true))",
+      "$eventId": {
+        ".write": "auth != null && (auth.uid == '6EBZp2WqNsaPscVkdPMso1q6uTg1' || (root.child('adminControls').child('staffLockdown').val() != true && root.child('adminUsers').child(auth.uid).child('active').val() == true && root.child('adminUsers').child(auth.uid).child('readOnly').val() != true && (root.child('adminUsers').child(auth.uid).child('permissions').child('players_edit').val() == true || root.child('adminUsers').child(auth.uid).child('permissions').child('players_delete').val() == true)))",
+        ".validate": "!newData.exists() || (newData.hasChildren(['type','playerId','nick','at']) && newData.child('type').isString() && newData.child('playerId').isString() && newData.child('nick').isString() && newData.child('nick').val().length > 0 && newData.child('nick').val().length <= 64 && newData.child('at').isNumber())"
+      }
+    }
+  }
+}
