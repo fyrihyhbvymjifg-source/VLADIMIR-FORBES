@@ -62,7 +62,7 @@
   }
 
   function isGlobalForbesPage(page){
-    return page === 'forbes.html' || page === 'forbes-apply.html';
+    return page === 'forbes.html' || page === 'forbes-apply.html' || page === 'forbes-servers.html';
   }
 
   function visibilityForPage(page){
@@ -78,6 +78,7 @@
 
   function isActive(key, page){
     if(key === 'forbes78') return page === 'index.html' || page === '';
+    if(key === 'forbesServers') return page === 'forbes-servers.html';
     if(key === 'forbesGlobal') return page === 'forbes.html' || page === 'forbes-apply.html';
     if(key === 'login') return page === 'forbes-login.html' || page === 'profile.html';
     const map = {
@@ -103,7 +104,8 @@
     document.querySelectorAll('[data-games-promo]').forEach(el => { el.hidden = show.games === false; });
     const ranking = [
       navLink({href:'index.html',label:'Forbes 78',key:'forbes78',icon:'trophy',cls:'nav-pill forbes-home-link'}),
-      navLink({href:'forbes.html',label:'Общий Forbes',key:'forbesGlobal',icon:'globe',cls:'nav-pill general-forbes-link'})
+      navLink({href:'forbes.html',label:'Общий Forbes',key:'forbesGlobal',icon:'globe',cls:'nav-pill general-forbes-link'}),
+      navLink({href:'forbes-servers.html',label:'Forbes серверов',key:'forbesServers',icon:'servers',cls:'nav-pill server-forbes-link',badge:'91'})
     ];
     const sections = [];
     if(show.admins) sections.push(navLink({href:'admins.html',label:'Администрация',key:'admins',icon:'users'}));

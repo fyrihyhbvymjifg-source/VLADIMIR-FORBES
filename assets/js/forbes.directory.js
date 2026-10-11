@@ -3,11 +3,13 @@
   const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const rowsOf=v=>Array.isArray(v)?v.filter(Boolean):(v&&typeof v==='object'?Object.values(v).filter(Boolean):[]);
   const seed=rowsOf(window.BR_FORBES_SEED).map((r,i)=>normalize(r,i));
+  const requested=Number(new URLSearchParams(location.search).get('server'));
+  const targetServer=Number.isInteger(requested)&&requested>=1&&requested<=91?String(requested):'';
   let rows=[...seed], source='local', updated='';
   function normalize(r,i=0){return {id:String(r?.id||`forbes-${i+1}`),order:Number(r?.order)||i+1,nick:String(r?.nick||''),server:String(r?.server||''),name:String(r?.name||''),note:String(r?.note||''),raw:String(r?.raw||'')};}
   function hue(v=''){let h=0;for(const c of String(v||'—'))h=(h*31+c.charCodeAt(0))%360;return h;}
   function serverSort(a,b){const na=parseInt(a,10),nb=parseInt(b,10);if(Number.isFinite(na)&&Number.isFinite(nb)&&na!==nb)return na-nb;return String(a).localeCompare(String(b),'ru',{numeric:true});}
-  function allServers(){return [...new Set(rows.map(r=>r.server.trim()).filter(Boolean))].sort(serverSort);}
+  function allServers(){return [...new Set([...rows.map(r=>r.server.trim()).filter(Boolean),...(targetServer?[targetServer]:[])])].sort(serverSort);}
   function serverCounts(){const m=new Map();rows.forEach(r=>{const s=r.server.trim();if(s)m.set(s,(m.get(s)||0)+1)});return [...m].sort((a,b)=>b[1]-a[1]||serverSort(a[0],b[0]));}
   function renderFilters(){
     const sel=$('#fdServerSelect'); const current=sel.value||'all'; const servers=allServers();
@@ -32,6 +34,7 @@
     $('#fdUpdated').textContent=updated?`Обновлено: ${updated}`:'Исходный импорт'; render();
   }
   $('#fdSearch').addEventListener('input',render); $('#fdServerSelect').addEventListener('change',render); $('#fdReset').addEventListener('click',()=>{$('#fdSearch').value='';$('#fdServerSelect').value='all';render();});
+  if(targetServer){const sel=$('#fdServerSelect');const option=document.createElement('option');option.value=targetServer;option.textContent='Сервер '+targetServer;sel.append(option);sel.value=targetServer;const title=document.querySelector('.fd-hero h1');title.textContent='FORBES · СЕРВЕР '+targetServer;document.title='Forbes сервера '+targetServer+' · BLACK RUSSIA';const desc=document.querySelector('.fd-hero p');desc.textContent='Участники сервера '+targetServer+' из общего списка Forbes. Суммы состояния в этом списке не указаны.';}
   setModel({rows:seed},'local');
   try{
     if(window.firebase&&window.BR_FIREBASE_CONFIG){if(!firebase.apps.length)firebase.initializeApp(window.BR_FIREBASE_CONFIG);firebase.database().ref('settings/directories/forbes').on('value',snap=>{const v=snap.val();if(v&&(v.initialized||rowsOf(v.rows).length))setModel(v,'firebase');else setModel({rows:seed},'local');},()=>setModel({rows:seed},'local'));}

@@ -49,7 +49,7 @@ function apply(v){
   document.body.appendChild(layer);statusBadge(d);
 }
 function effectiveMode(){
-  const scope=/^(forbes|forbes-apply)\.html$/.test(location.pathname.split('/').pop())?'global':'78';
+  const scope=/^(forbes|forbes-apply|forbes-servers)\.html$/.test(location.pathname.split('/').pop())?'global':'78';
   const base=clean(settings?.eventModes?.[scope]??settings?.eventMode??'off');const s=settings?.eventSchedule;
   if(!s||s.enabled!==true)return base;
   const now=Date.now(),start=Number(s.startAt||0),end=Number(s.endAt||0),scheduled=clean(s.eventMode||'off');

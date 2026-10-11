@@ -2743,6 +2743,7 @@ siteSettingCreatorCard2Title:'creatorCard2Title', siteSettingCreatorCard2Text:'c
     renderSiteSettingsForm(); renderDashboard();
     auditAdminAction('Событие сайта','События',SITE_EVENT_LABELS[mode]);
     showToast(mode==='off'?'Событие сайта отключено':`Событие включено: ${SITE_EVENT_LABELS[mode]}`);
+    return true;
   }
   let pendingEvent='off';
   const preview=document.getElementById('eventPreviewDialog');
@@ -2757,7 +2758,7 @@ siteSettingCreatorCard2Title:'creatorCard2Title', siteSettingCreatorCard2Text:'c
     preview.showModal();
   }));
   document.getElementById('eventPreviewClose')?.addEventListener('click',()=>preview.close());
-  document.getElementById('eventPreviewApply')?.addEventListener('click',async()=>{await applySiteEventMode(pendingEvent);preview.close();});
+  document.getElementById('eventPreviewApply')?.addEventListener('click',async()=>{const button=document.getElementById('eventPreviewApply');button.disabled=true;try{if(await applySiteEventMode(pendingEvent))preview.close();}finally{button.disabled=false;}});
   document.getElementById('eventTargetScope')?.addEventListener('change',renderSiteSettingsForm);
   $('#disableSiteEventBtn')?.addEventListener('click',()=>applySiteEventMode('off'));
   $('#applySiteEventBtn')?.addEventListener('click',()=>applySiteEventMode(document.getElementById('siteEventQuickSelect')?.value||'off'));
