@@ -50,3 +50,5 @@ html.nav-menu-open .br-topbar-reference,html.nav-menu-open .br-topbar-reference 
 }
 @media(max-width:380px){.br-topbar-reference .nav-sections{grid-template-columns:1fr!important}.br-topbar-reference .brand-copy strong{font-size:10px!important}}
 @media(prefers-reduced-motion:reduce){.br-topbar-reference *{transition:none!important}}
+
+.server-forbes-link{border-color:#e6bc8c40!important}.server-forbes-link .nav-mini-badge{position:static!important;margin-left:4px!important;color:#e6bc8c!important}
