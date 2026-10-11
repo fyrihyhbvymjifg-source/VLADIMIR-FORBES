@@ -2442,6 +2442,7 @@
       support: true,
       achievements: true,
       knowledge: true,
+      games: true,
       settings: true,
       login: true
     },
@@ -2456,6 +2457,7 @@
       support: true,
       achievements: true,
       knowledge: true,
+      games: true,
       settings: true,
       login: true
     },
@@ -2470,6 +2472,7 @@
       support: true,
       achievements: true,
       knowledge: true,
+      games: true,
       settings: true,
       login: true
     }
@@ -2502,6 +2505,7 @@
 
   Object.assign(SITE_EVENT_DEFS,{"midnight": {"label": "Midnight Club", "icon": "◈", "description": "Фиолетовый клубный свет, тонкая сетка и строгие тёмные карточки."}, "emerald": {"label": "Emerald Capital", "icon": "◆", "description": "Изумрудные акценты, глубокий зелёный фон и спокойный стиль капитала."}, "platinum": {"label": "Platinum Edition", "icon": "◇", "description": "Холодное серебро, графит и чёткие линии без яркого неона."}, "sunset": {"label": "Vladimir Sunset", "icon": "☀", "description": "Тёплый закат, медные детали и бордовые поверхности."}, "terminal": {"label": "Market Terminal", "icon": "⌁", "description": "Биржевой терминал: лаймовые акценты, сетка и моноширинные цифры."}, "royal": {"label": "Royal Velvet", "icon": "♛", "description": "Бархатный сливовый фон, мягкое золото и тонкая рамка."}});
 
+  Object.assign(SITE_EVENT_DEFS,{"aurora": {"label": "Северное сияние", "icon": "✦", "description": "Холодный графит, полярные ленты света и ледяные линии рейтинга.", "accent": "#6ee7ce", "bg": "#07151b", "surface": "#10282d"}, "skyline": {"label": "Ночной Владимир", "icon": "▥", "description": "Городской силуэт, тёплые окна и медные детали вечернего Forbes.", "accent": "#ffad72", "bg": "#100f19", "surface": "#24202b"}, "paddock": {"label": "Красная зона", "icon": "⚑", "description": "Гоночная разметка, крупные номера и красные детали закрытого паддока.", "accent": "#ff514c", "bg": "#111114", "surface": "#222226"}, "noir": {"label": "Чёрный список", "icon": "◈", "description": "Редакционный монохром: серебро, строгая типографика и тонкие линии.", "accent": "#e3dfd4", "bg": "#0b0c0e", "surface": "#1b1c20"}});
   function currentSiteSettings() {
     const x = meta && meta.siteSettings && typeof meta.siteSettings === 'object' ? meta.siteSettings : {};
     const merged = {...SITE_DEFAULTS, ...x};
@@ -2512,7 +2516,7 @@
   }
 
   function navControlMap(prefix){
-    return {cars:`${prefix}Cars`,property:`${prefix}Property`,blackpass:`${prefix}Blackpass`,techs:`${prefix}Techs`,servers:`${prefix}Servers`,admins:`${prefix}Admins`,leaders:`${prefix}Leaders`,events:`${prefix}Events`,chat:`${prefix}Chat`,support:`${prefix}Support`,achievements:`${prefix}Achievements`,knowledge:`${prefix}Knowledge`,settings:`${prefix}Settings`,login:`${prefix}Login`};
+    return {games:`${prefix}Games`,cars:`${prefix}Cars`,property:`${prefix}Property`,blackpass:`${prefix}Blackpass`,techs:`${prefix}Techs`,servers:`${prefix}Servers`,admins:`${prefix}Admins`,leaders:`${prefix}Leaders`,events:`${prefix}Events`,chat:`${prefix}Chat`,support:`${prefix}Support`,achievements:`${prefix}Achievements`,knowledge:`${prefix}Knowledge`,settings:`${prefix}Settings`,login:`${prefix}Login`};
   }
   function renderNavControls(prefix,state,defaults){
     const map=navControlMap(prefix); const current={...defaults,...(state&&typeof state==='object'?state:{})};
@@ -2557,14 +2561,17 @@ siteSettingCreatorCard2Title:'creatorCard2Title', siteSettingCreatorCard2Text:'c
     renderNavControls('siteNav78',x.forbes78Nav,SITE_DEFAULTS.forbes78Nav);
     renderNavControls('siteNavGlobal',x.forbesGlobalNav,SITE_DEFAULTS.forbesGlobalNav);
     const eventSelect=document.getElementById('siteEventQuickSelect');
-    const eventMode=SITE_EVENT_DEFS[x.eventMode]?x.eventMode:'off';
+    const scope=document.getElementById('eventTargetScope')?.value||'both';
+    const selectedMode=scope==='both'?x.eventMode:(x.eventModes?.[scope]??x.eventMode);
+    const eventMode=SITE_EVENT_DEFS[selectedMode]?selectedMode:'off';
+    const scopes=document.getElementById('eventScopeStatus');if(scopes)scopes.textContent=`Forbes 78: ${SITE_EVENT_DEFS[x.eventModes?.['78']??x.eventMode]?.label||'Без события'} · Общий: ${SITE_EVENT_DEFS[x.eventModes?.global??x.eventMode]?.label||'Без события'}`;
     if(eventSelect && document.activeElement!==eventSelect) eventSelect.value=eventMode;
     const eventDef=SITE_EVENT_DEFS[eventMode]||SITE_EVENT_DEFS.off;
     const eventStatus=document.getElementById('siteEventQuickStatus'); if(eventStatus) eventStatus.textContent=eventDef.label;
     const eventDescription=document.getElementById('currentEventDescription'); if(eventDescription) eventDescription.textContent=eventDef.description;
     const eventIcon=document.getElementById('currentEventIcon'); if(eventIcon) eventIcon.textContent=eventDef.icon;
     const eventHero=document.getElementById('eventLiveHero'); if(eventHero) eventHero.dataset.currentEvent=eventMode;
-    $$('[data-event-choice]').forEach(btn => { const active=btn.dataset.eventChoice===eventMode; btn.classList.toggle('active',active); const action=btn.querySelector('em'); if(action) action.textContent=active?'✓ Активно':'Активировать'; });
+    $$('[data-event-choice]').forEach(btn => { const active=btn.dataset.eventChoice===eventMode; btn.classList.toggle('active',active); const action=btn.querySelector('em'); if(action) action.textContent=active?'✓ Активно · посмотреть':'Предпросмотр →'; });
     document.documentElement.style.setProperty('--admin-accent', /^#[0-9a-f]{6}$/i.test(String(x.customAccent||''))?x.customAccent:'#ff3347');
     document.body.classList.toggle('admin-glass', x.glass!==false);
     const sl=document.getElementById('securityLastLogin'); if(sl) sl.textContent=fmtDate(Number(meta?.security?.lastLogin||0));
@@ -2718,13 +2725,16 @@ siteSettingCreatorCard2Title:'creatorCard2Title', siteSettingCreatorCard2Text:'c
     mode=SITE_EVENT_DEFS[mode]?mode:'off';
     eventSaveBusy=true;
     const buttons=$$('[data-event-choice]');buttons.forEach(b=>b.disabled=true);
-    try { await withTimeout(fbDb.ref('settings/siteSettings/eventMode').set(mode),10000,'EVENT_SAVE_TIMEOUT'); }
+    const scope=document.getElementById('eventTargetScope')?.value||'both';
+    const patch=scope==='both'?{eventMode:mode,'eventModes/78':mode,'eventModes/global':mode}:{['eventModes/'+scope]:mode};
+    try { await withTimeout(fbDb.ref('settings/siteSettings').update(patch),10000,'EVENT_SAVE_TIMEOUT'); }
     catch(error){showToast('Не удалось подтвердить сохранение темы. Проверьте соединение и права.');console.warn('Event save',error);return;}
     finally{eventSaveBusy=false;buttons.forEach(b=>b.disabled=false);}
 
     mode=SITE_EVENT_DEFS[mode]?mode:'off';
     const now=Date.now();
-    meta.siteSettings={...currentSiteSettings(),eventMode:mode};
+    const previous=currentSiteSettings();
+    meta.siteSettings={...previous,...(scope==='both'?{eventMode:mode}:{}),eventModes:{...previous.eventModes,...(scope==='both'?{'78':mode,global:mode}:{[scope]:mode})}};
     meta.updatedAt=now; meta.updatedBy='Calypso_Person';
     if(mode!=='off') addGlobalNotification('event',`Событие сайта: ${SITE_EVENT_LABELS[mode]}`,`На сайте включено оформление «${SITE_EVENT_LABELS[mode]}».`,'🎉','index.html#top',now);
     history.unshift({time:now,nick:'Calypso_Person',old:'Событие сайта',new:SITE_EVENT_LABELS[mode]});
@@ -2734,7 +2744,21 @@ siteSettingCreatorCard2Title:'creatorCard2Title', siteSettingCreatorCard2Text:'c
     auditAdminAction('Событие сайта','События',SITE_EVENT_LABELS[mode]);
     showToast(mode==='off'?'Событие сайта отключено':`Событие включено: ${SITE_EVENT_LABELS[mode]}`);
   }
-  $$('[data-event-choice]').forEach(btn => btn.addEventListener('click', () => applySiteEventMode(btn.dataset.eventChoice || 'off')));
+  let pendingEvent='off';
+  const preview=document.getElementById('eventPreviewDialog');
+  $$('[data-event-choice]').forEach(btn => btn.addEventListener('click', () => {
+    pendingEvent=btn.dataset.eventChoice||'off';const d=SITE_EVENT_DEFS[pendingEvent];
+    const sample=document.getElementById('eventPreviewSample');sample.dataset.previewEvent=pendingEvent;
+    sample.style.setProperty('--preview-accent',d.accent||getComputedStyle(btn).getPropertyValue('--ec')||'#ff994c');
+    sample.style.background=getComputedStyle(btn.querySelector('.event-scene')).background;
+    document.getElementById('eventPreviewName').textContent=d.label;
+    document.getElementById('eventPreviewDescription').textContent=d.description;
+    document.getElementById('eventPreviewTarget').textContent=document.getElementById('eventTargetScope').selectedOptions[0].text;
+    preview.showModal();
+  }));
+  document.getElementById('eventPreviewClose')?.addEventListener('click',()=>preview.close());
+  document.getElementById('eventPreviewApply')?.addEventListener('click',async()=>{await applySiteEventMode(pendingEvent);preview.close();});
+  document.getElementById('eventTargetScope')?.addEventListener('change',renderSiteSettingsForm);
   $('#disableSiteEventBtn')?.addEventListener('click',()=>applySiteEventMode('off'));
   $('#applySiteEventBtn')?.addEventListener('click',()=>applySiteEventMode(document.getElementById('siteEventQuickSelect')?.value||'off'));
 

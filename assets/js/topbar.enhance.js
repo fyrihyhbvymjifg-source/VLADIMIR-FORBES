@@ -12,6 +12,7 @@
     support: true,
     achievements: true,
     knowledge: true,
+    games: true,
     settings: true,
     login: true
   };
@@ -99,6 +100,7 @@
 
   function buildReferenceNav(nav){
     const show = visibilityForPage(currentPage());
+    document.querySelectorAll('[data-games-promo]').forEach(el => { el.hidden = show.games === false; });
     const ranking = [
       navLink({href:'index.html',label:'Forbes 78',key:'forbes78',icon:'trophy',cls:'nav-pill forbes-home-link'}),
       navLink({href:'forbes.html',label:'Общий Forbes',key:'forbesGlobal',icon:'globe',cls:'nav-pill general-forbes-link'})
@@ -116,7 +118,7 @@
     if(show.property) sections.push(navLink({href:'garage.html#property',label:'Недвижимость',key:'property',icon:'book'}));
     if(show.blackpass) sections.push(navLink({href:'black-pass.html',label:'Black Pass',key:'blackpass',icon:'ticket'}));
     if(show.knowledge) sections.push(navLink({href:'knowledge.html',label:'База знаний',key:'knowledge',icon:'book'}));
-    sections.push(navLink({href:'games.html',label:'Игры',key:'games',icon:'crown'}));
+    if(show.games) sections.push(navLink({href:'games.html',label:'Игры',key:'games',icon:'crown'}));
     const actions = [];
     if(show.settings) actions.push(navLink({href:'#',label:'Настройки',key:'settings',icon:'gear',cls:'user-settings-nav',attrs:{'data-open-user-settings':''}}));
     if(show.login) actions.push(navLink({href:'forbes-login.html',label:'Войти',key:'login',icon:'login',cls:'nav-login-link'}));

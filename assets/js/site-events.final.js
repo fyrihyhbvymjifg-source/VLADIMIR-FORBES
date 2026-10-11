@@ -24,14 +24,16 @@ const defs={
   "wealth":{label:"💰 Wealth Rush",icon:"💰",items:["💰", "✦", "★"],accent:"#f4ca64",ambient:"radial-gradient(circle at 12% 18%,rgba(244,202,100,.18),transparent 34%),radial-gradient(circle at 88% 10%,rgba(255,160,87,.08),transparent 30%)"},
 };
 Object.assign(defs,{"midnight": {"label": "Midnight Club", "icon": "◈", "items": [], "accent": "#a893ff", "ambient": "radial-gradient(ellipse at 12% 0%,#15132d,transparent 65%)"}, "emerald": {"label": "Emerald Capital", "icon": "◆", "items": [], "accent": "#5be3ad", "ambient": "radial-gradient(ellipse at 12% 0%,#102b22,transparent 65%)"}, "platinum": {"label": "Platinum Edition", "icon": "◇", "items": [], "accent": "#cad5e5", "ambient": "radial-gradient(ellipse at 12% 0%,#222b38,transparent 65%)"}, "sunset": {"label": "Vladimir Sunset", "icon": "☀", "items": [], "accent": "#ff9972", "ambient": "radial-gradient(ellipse at 12% 0%,#38202c,transparent 65%)"}, "terminal": {"label": "Market Terminal", "icon": "⌁", "items": [], "accent": "#a4ee62", "ambient": "radial-gradient(ellipse at 12% 0%,#182416,transparent 65%)"}, "royal": {"label": "Royal Velvet", "icon": "♛", "items": [], "accent": "#e3bd74", "ambient": "radial-gradient(ellipse at 12% 0%,#2b1838,transparent 65%)"}});
+Object.assign(defs,{"aurora": {"label": "Северное сияние", "icon": "✦", "items": [], "accent": "#6ee7ce", "ambient": "radial-gradient(ellipse at 70% 0%,#10282d,transparent 65%)"}, "skyline": {"label": "Ночной Владимир", "icon": "▥", "items": [], "accent": "#ffad72", "ambient": "radial-gradient(ellipse at 70% 0%,#24202b,transparent 65%)"}, "paddock": {"label": "Красная зона", "icon": "⚑", "items": [], "accent": "#ff514c", "ambient": "radial-gradient(ellipse at 70% 0%,#222226,transparent 65%)"}, "noir": {"label": "Чёрный список", "icon": "◈", "items": [], "accent": "#e3dfd4", "ambient": "radial-gradient(ellipse at 70% 0%,#1b1c20,transparent 65%)"}});
 const clean=v=>defs[v]?v:'off';
 let mode='off', settings={eventMode:'off'};
-function clear(){document.querySelectorAll('.site-event-layer,.site-event-ambient,.site-event-status').forEach(x=>x.remove())}
-function statusBadge(d){const el=document.createElement('div');el.className='site-event-status';el.innerHTML=`<span>${d.icon}</span><b>${d.label.replace(/^\S+\s*/, '')||d.label}</b>`;document.body.appendChild(el)}
+function clear(){document.querySelectorAll('.site-event-layer,.site-event-ambient,.site-event-status,.site-event-art').forEach(x=>x.remove())}
+function statusBadge(d){const el=document.createElement('div');el.className='site-event-status';el.innerHTML=`<span>${d.icon}</span><b>${d.label}</b>`;document.body.appendChild(el)}
 function apply(v){
   mode=clean(v); const root=document.documentElement; root.dataset.siteEvent=mode; clear();
   if(mode==='off'){root.style.removeProperty('--event-accent'); return;}
-  const d=defs[mode]; root.style.setProperty('--event-accent',d.accent);
+  const d=defs[mode];
+  if(['aurora','skyline','paddock','noir'].includes(mode)){const art=document.createElement('div');art.className='site-event-art';art.setAttribute('aria-hidden','true');document.body.appendChild(art);} root.style.setProperty('--event-accent',d.accent);
   const ambient=document.createElement('div'); ambient.className='site-event-ambient'; ambient.style.background=d.ambient; ambient.setAttribute('aria-hidden','true'); document.body.appendChild(ambient);
   if(root.dataset.safeMode==='1'){statusBadge(d);return;}
   const layer=document.createElement('div'); layer.className='site-event-layer'; layer.setAttribute('aria-hidden','true');
@@ -41,15 +43,17 @@ function apply(v){
   document.body.appendChild(layer);statusBadge(d);
 }
 function effectiveMode(){
-  const base=clean(settings?.eventMode||'off');const s=settings?.eventSchedule;
+  const scope=/^(forbes|forbes-apply)\.html$/.test(location.pathname.split('/').pop())?'global':'78';
+  const base=clean(settings?.eventModes?.[scope]??settings?.eventMode??'off');const s=settings?.eventSchedule;
   if(!s||s.enabled!==true)return base;
   const now=Date.now(),start=Number(s.startAt||0),end=Number(s.endAt||0),scheduled=clean(s.eventMode||'off');
   if(scheduled!=='off'&&start&&end&&now>=start&&now<=end)return scheduled;
   return base;
 }
 function refresh(){const next=effectiveMode();if(next!==mode)apply(next)}
+window.addEventListener('br-site-settings',()=>{if(window.BRCurrentSiteSettings){settings=window.BRCurrentSiteSettings;refresh()}});
 function localSettings(){try{const k=window.BR_KEYS?.meta;const m=k&&JSON.parse(localStorage.getItem(k)||'{}');return m?.siteSettings||{}}catch{return{}}}
-function start(){settings=localSettings();apply(effectiveMode());const cfg=window.BR_FIREBASE_CONFIG;if(cfg&&window.firebase){try{if(!firebase.apps.length)firebase.initializeApp(cfg);firebase.database().ref('settings/siteSettings').on('value',s=>{settings=s.val()||{};refresh()},()=>{});}catch{}}setInterval(refresh,30000);window.addEventListener('br-safe-mode-change',refresh)}
+function start(){settings=localSettings();apply(effectiveMode());const cfg=window.BR_FIREBASE_CONFIG;if(cfg&&window.firebase){try{if(!firebase.apps.length)firebase.initializeApp(cfg);firebase.database().ref('settings/siteSettings').on('value',s=>{settings=s.val()||{};refresh()},()=>{});}catch{}}setInterval(refresh,30000);window.addEventListener('br-safe-mode-change',()=>apply(effectiveMode()))}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();
 window.BRSiteEvents={apply,get:()=>mode,defs,effectiveMode};
 
