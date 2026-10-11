@@ -25,14 +25,20 @@ const defs={
 };
 Object.assign(defs,{"midnight": {"label": "Midnight Club", "icon": "◈", "items": [], "accent": "#a893ff", "ambient": "radial-gradient(ellipse at 12% 0%,#15132d,transparent 65%)"}, "emerald": {"label": "Emerald Capital", "icon": "◆", "items": [], "accent": "#5be3ad", "ambient": "radial-gradient(ellipse at 12% 0%,#102b22,transparent 65%)"}, "platinum": {"label": "Platinum Edition", "icon": "◇", "items": [], "accent": "#cad5e5", "ambient": "radial-gradient(ellipse at 12% 0%,#222b38,transparent 65%)"}, "sunset": {"label": "Vladimir Sunset", "icon": "☀", "items": [], "accent": "#ff9972", "ambient": "radial-gradient(ellipse at 12% 0%,#38202c,transparent 65%)"}, "terminal": {"label": "Market Terminal", "icon": "⌁", "items": [], "accent": "#a4ee62", "ambient": "radial-gradient(ellipse at 12% 0%,#182416,transparent 65%)"}, "royal": {"label": "Royal Velvet", "icon": "♛", "items": [], "accent": "#e3bd74", "ambient": "radial-gradient(ellipse at 12% 0%,#2b1838,transparent 65%)"}});
 Object.assign(defs,{"aurora": {"label": "Северное сияние", "icon": "✦", "items": [], "accent": "#6ee7ce", "ambient": "radial-gradient(ellipse at 70% 0%,#10282d,transparent 65%)"}, "skyline": {"label": "Ночной Владимир", "icon": "▥", "items": [], "accent": "#ffad72", "ambient": "radial-gradient(ellipse at 70% 0%,#24202b,transparent 65%)"}, "paddock": {"label": "Красная зона", "icon": "⚑", "items": [], "accent": "#ff514c", "ambient": "radial-gradient(ellipse at 70% 0%,#222226,transparent 65%)"}, "noir": {"label": "Чёрный список", "icon": "◈", "items": [], "accent": "#e3dfd4", "ambient": "radial-gradient(ellipse at 70% 0%,#1b1c20,transparent 65%)"}});
+Object.entries(window.BREventDesigns||{}).forEach(([key,value])=>{if(defs[key])Object.assign(defs[key],value)});
 const clean=v=>defs[v]?v:'off';
 let mode='off', settings={eventMode:'off'};
-function clear(){document.querySelectorAll('.site-event-layer,.site-event-ambient,.site-event-status,.site-event-art').forEach(x=>x.remove())}
+function clear(){document.querySelectorAll('.site-event-layer,.site-event-ambient,.site-event-status,.site-event-art,.event-edition').forEach(x=>x.remove())}
 function statusBadge(d){const el=document.createElement('div');el.className='site-event-status';el.innerHTML=`<span>${d.icon}</span><b>${d.label}</b>`;document.body.appendChild(el)}
 function apply(v){
   mode=clean(v); const root=document.documentElement; root.dataset.siteEvent=mode; clear();
-  if(mode==='off'){root.style.removeProperty('--event-accent'); return;}
+  if(mode==='off'){['--event-accent','--event-accent2','--event-bg1','--event-bg2','--event-surface','--event-surface2','--event-glow1','--event-glow2','--event-line'].forEach(k=>root.style.removeProperty(k));return;}
   const d=defs[mode];
+  const design=window.BREventDesigns?.[mode];
+  if(design){for(const [key,value]of Object.entries({'--event-accent2':design.secondary,'--event-bg1':design.bg,'--event-bg2':design.bg,'--event-surface':design.surface,'--event-surface2':design.bg,'--event-glow1':design.accent+'24','--event-glow2':design.secondary+'18','--event-line':design.accent+'40'}))root.style.setProperty(key,value);}
+  const host=document.querySelector('.hero>.shell,.fd-hero>.shell');
+  if(host&&design){const edition=document.createElement('div');edition.className='event-edition';const copy=document.createElement('div');const label=document.createElement('span');label.textContent='ОФОРМЛЕНИЕ / '+(/forbes\.html$/.test(location.pathname)?'ОБЩИЙ FORBES':'FORBES 78');const title=document.createElement('strong');title.textContent=d.label.replace(/^[^\p{L}\p{N}]+/u,'');copy.append(label,title);const art=document.createElement('div');art.className='event-edition-art';art.innerHTML=window.BREventArtwork?.(mode)||'';edition.append(copy,art);host.prepend(edition);}
+
   if(['aurora','skyline','paddock','noir'].includes(mode)){const art=document.createElement('div');art.className='site-event-art';art.setAttribute('aria-hidden','true');document.body.appendChild(art);} root.style.setProperty('--event-accent',d.accent);
   const ambient=document.createElement('div'); ambient.className='site-event-ambient'; ambient.style.background=d.ambient; ambient.setAttribute('aria-hidden','true'); document.body.appendChild(ambient);
   if(root.dataset.safeMode==='1'){statusBadge(d);return;}
